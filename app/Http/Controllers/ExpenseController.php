@@ -12,7 +12,9 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        //
+        $expenses=Expense::all();
+
+        return view('expenses.index',compact('expenses'));
     }
 
     /**
@@ -20,7 +22,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        //
+        return view('expenses.create');
     }
 
     /**
@@ -28,7 +30,24 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     $request->validate([
+        'description'=>['required'],
+        'spending'=>['required'],
+        'expenseDate'=>['required']
+     ]);
+     
+     $expense=new Expense();
+     $expense->description=$request->description;
+     $expense->spending=$request->spending;
+     $expense->expenseDate=$request->expenseDate;
+
+     
+
+     $expense->save();
+
+
+     return redirect('/expense');
+
     }
 
     /**
@@ -36,7 +55,7 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
-        //
+        return view('expenses.show',compact('expense'));
     }
 
     /**
@@ -44,7 +63,7 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        //
+        return view('expenses.update',compact('expense'));
     }
 
     /**
@@ -52,7 +71,21 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-        //
+
+        $request->validate([
+            'description'=>['required'],
+            'spending'=>['required'],
+            'expenseDate'=>['required']
+         ]);
+    
+         $expense->description=$request->description;
+         $expense->spending=$request->spending;
+         $expense->expenseDate=$request->expenseDate;
+    
+         $expense->save();
+    
+    
+         return view('expenses.show',compact('expense'));
     }
 
     /**
@@ -60,6 +93,7 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
+        return redirect()->route('expense.index');
     }
 }
