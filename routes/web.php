@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ExpenseController;
+use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
 
@@ -15,3 +17,9 @@ use App\Http\Controllers\EarningController;
 */
 
 Route::resource('earnings', EarningController::class);
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+Route::resource('/expense',ExpenseController::class);
