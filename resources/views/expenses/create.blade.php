@@ -9,7 +9,7 @@
 
 <body>
 
-    @include('templates.header')
+    
 
 
     <main>
@@ -36,7 +36,7 @@
     </main>
 
 
-    @include('templates.footer')
+    
 
 
 </body>
