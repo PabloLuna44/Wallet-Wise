@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar gasto</title>
-</head>
+<x-layout>
 
-<body>
-
-    @include('templates.header')
-
-
-    <main>
-
-        <h1>Form</h1>
+        <h1>Registro de gasto</h1>
 
         <form method="POST" action="/expense">
 
@@ -33,12 +20,5 @@
 
         </form>
 
-    </main>
+</x-layout>
 
-
-    @include('templates.footer')
-
-
-</body>
-
-</html>
