@@ -21,6 +21,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/landing', function () {
+    return view('landingPage');
+});
+
+
+
 
 Route::resource('/expense',ExpenseController::class);
 
