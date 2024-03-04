@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ExpenseController;
-use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ExpenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +16,13 @@ use App\Http\Controllers\EarningController;
 |
 */
 
+Route::resource('accounts', AccountController::class);
 Route::resource('earnings', EarningController::class);
+Route::resource('expenses', ExpenseController::class);
+
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-Route::resource('/expense',ExpenseController::class);
 
 Route::middleware([
     'auth:sanctum',
