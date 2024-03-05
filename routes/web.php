@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\ExpenseController;
-use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\InvestmentController;
 use App\Models\Investment;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\TransactionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,11 @@ use App\Models\Investment;
 |
 */
 
+Route::resource('transactions', TransactionController::class);
+Route::resource('accounts', AccountController::class);
 Route::resource('earnings', EarningController::class);
+Route::resource('expenses', ExpenseController::class);
+
 Route::get('/', function () {
     return view('welcome');
 });
