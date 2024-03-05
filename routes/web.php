@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use App\Http\Controllers\ExpenseController;
 |
 */
 
+Route::resource('transactions', TransactionController::class);
 Route::resource('accounts', AccountController::class);
 Route::resource('earnings', EarningController::class);
 Route::resource('expenses', ExpenseController::class);
