@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->float('amount');
             $table->float('interestRate');
-            $table->integer('loanTerm');
             $table->enum('status',['pending','paid','losing']);
             $table->date('paymentDate');
             $table->timestamps();
