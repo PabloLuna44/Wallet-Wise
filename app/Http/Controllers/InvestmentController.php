@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Investment;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class InvestmentController extends Controller
@@ -10,6 +11,12 @@ class InvestmentController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['index','create']);
+    }
+
     public function index()
     {
        $investments=Investment::all();

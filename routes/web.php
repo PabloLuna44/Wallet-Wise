@@ -33,7 +33,11 @@ Route::get('/', function () {
 Route::resource('/expense',ExpenseController::class);
 
 
-Route::resource('/investment',InvestmentController::class);
+Route::middleware(['auth'])->group(function(){
+
+    Route::resource('/investment',InvestmentController::class);
+
+});
 
 Route::middleware([
     'auth:sanctum',
