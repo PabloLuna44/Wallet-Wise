@@ -24,16 +24,13 @@ Route::resource('transactions', TransactionController::class);
 Route::resource('accounts', AccountController::class);
 Route::resource('earnings', EarningController::class);
 Route::resource('expenses', ExpenseController::class);
+Route::resource('/investment',InvestmentController::class);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-Route::resource('/expense',ExpenseController::class);
-
-
-Route::resource('/investment',InvestmentController::class);
 
 Route::middleware([
     'auth:sanctum',
