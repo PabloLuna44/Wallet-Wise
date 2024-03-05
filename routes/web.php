@@ -4,6 +4,8 @@ use App\Http\Controllers\ExpenseController;
 use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
+use App\Http\Controllers\InvestmentController;
+use App\Models\Investment;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,9 @@ Route::get('/', function () {
 
 
 Route::resource('/expense',ExpenseController::class);
+
+
+Route::resource('/investment',InvestmentController::class);
 
 Route::middleware([
     'auth:sanctum',
