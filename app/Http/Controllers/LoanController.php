@@ -12,7 +12,8 @@ class LoanController extends Controller
      */
     public function index()
     {
-        //
+        $loans= Loan::all();
+        // return view('loans.index',compact('loans'));
     }
 
     /**
@@ -20,7 +21,7 @@ class LoanController extends Controller
      */
     public function create()
     {
-        //
+        //  return view('loans.create');
     }
 
     /**
@@ -28,7 +29,10 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            // atributes
+
+        ]);
     }
 
     /**
@@ -36,7 +40,6 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
-        //
     }
 
     /**
