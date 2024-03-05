@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('investments', function (Blueprint $table) {
             $table->id();
+            $table->string('type',50);
+            $table->float('amount');
+            $table->date('investmentDate');
+            $table->string('return');
+            $table->enum('status',['currently','finished']);
             $table->timestamps();
         });
     }
