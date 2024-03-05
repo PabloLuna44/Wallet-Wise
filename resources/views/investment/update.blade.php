@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar gasto</title>
+    <title>Actualizar Inversion</title>
 </head>
 
 <body>
-
-    
 
 
     <main>
@@ -26,9 +24,10 @@
         </div>
         @endif
 
-        <form method="POST" action="/investment">
+        <form method="POST" action="{{route('investment.update',$investment)}}">
 
             @csrf
+            @method('PATCH')
 
             <label for="type">Tipo de inversion</label>
             <input type="text" name="type" id="type" value="{{$investment->type}}">
