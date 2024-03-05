@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
+use App\Http\Controllers\InvestmentController;
+use App\Models\Investment;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\TransactionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +28,12 @@ Route::resource('expenses', ExpenseController::class);
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::resource('/expense',ExpenseController::class);
+
+
+Route::resource('/investment',InvestmentController::class);
 
 Route::middleware([
     'auth:sanctum',
