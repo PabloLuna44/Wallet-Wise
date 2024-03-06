@@ -41,7 +41,11 @@ Route::get('/landing', function () {
     return view('landingPage');
 });
 
+Route::middleware(['auth'])->group(function(){
 
+    Route::resource('/investment',InvestmentController::class);
+
+});
 
 
 Route::middleware([
