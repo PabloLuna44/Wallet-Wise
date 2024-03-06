@@ -3,6 +3,12 @@
 
         <h1>Registro de gasto</h1>
 
+<body>
+
+  
+
+        <h1>Form</h1>
+
         <form method="POST" action="/expense">
 
             @csrf
@@ -20,5 +26,15 @@
 
         </form>
 
+
 </x-layout>
+
+    </main>
+
+
+    
+
+
+</body>
+
 
