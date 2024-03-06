@@ -1,5 +1,11 @@
 <?php
 
+
+use App\Http\Controllers\ExpenseController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EarningController;
+use App\Http\Controllers\LoanController;
+use App\Models\Loan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\InvestmentController;
@@ -25,10 +31,16 @@ Route::resource('accounts', AccountController::class);
 Route::resource('earnings', EarningController::class);
 Route::resource('expenses', ExpenseController::class);
 Route::resource('/investment',InvestmentController::class);
+Route::resource('/loans',LoanController::class);
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/landing', function () {
+    return view('landingPage');
+});
+
 
 
 
