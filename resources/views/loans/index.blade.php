@@ -14,16 +14,16 @@
         @foreach($loans as $loan)
 
             <h2>Gasto</h2>
-            <p>{{$loan->amout}}</p>
+            <p>{{$loan->amount}}</p>
             <p>{{$loan->interestRate}}</p>
             <p>{{$loan->loanTerm}}</p>
             <p>{{$loan->status}}</p>
             <p>{{$loan->paymentDate}}</p>
         
 
-            <a href="{{route('loan.show',$loan)}}">Ver Gasto</a> |
-                <a href="{{route('loan.edit',$loan)}}">Editar</a> |
-                <form action="{{ route('loan.destroy',$loan)}}" method="POST">
+            <a href="{{route('loans.show',$loan)}}">Ver Gasto</a> |
+                <a href="{{route('loans.edit',$loan)}}">Editar</a> |
+                <form action="{{ route('loans.destroy',$loan)}}" method="POST">
                     @csrf 
                     @method('DELETE')
                     <input type="submit" value="Eliminar">

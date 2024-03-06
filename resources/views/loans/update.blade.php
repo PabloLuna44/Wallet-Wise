@@ -13,15 +13,16 @@
         </div>
         @endif
 
-        <form method="POST" action="{{route('investment.update',$invesment)}}">
+        <form method="POST" action="{{route('loans.update',$loan)}}">
 
             @csrf
+            @method('PATCH')
 
             <label for="amount">Monto de el prestamos</label>
-            <input type="number" name="amount" id="amount" value="{{$investment->amount}}">
+            <input type="number" name="amount" id="amount" value="{{$loan->amount}}">
 
             <label for="interestRate">Interes</label>
-            <input type="number" name="interestRate" id="interestRate" value="{{$investment->interestRate}}">
+            <input type="number" name="interestRate" id="interestRate" value="{{$loan->interestRate}}">
 
 
             <label for="status">Estado del prestamos</label>
@@ -32,7 +33,7 @@
             </select>
 
             <label for="paymentDate">Plazo del prestamos</label>
-            <input type="date" name="paymentDate" id="paymentDate" value="{{$investment->paymentDate}}">
+            <input type="date" name="paymentDate" id="paymentDate" value="{{$loan->paymentDate}}">
             
 
             <input type="submit" value="Enviar">

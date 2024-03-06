@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\ExpenseController;
-use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
+use App\Http\Controllers\LoanController;
+use App\Models\Loan;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::get('/landing', function () {
 });
 
 
-
+Route::resource('/loans',LoanController::class);
 
 Route::resource('/expense',ExpenseController::class);
 

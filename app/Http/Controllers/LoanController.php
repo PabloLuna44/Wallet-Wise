@@ -13,7 +13,7 @@ class LoanController extends Controller
     public function index()
     {
         $loans= Loan::all();
-        // return view('loans.index',compact('loans'));
+        return view('loans.index',compact('loans'));
     }
 
     /**
@@ -21,7 +21,7 @@ class LoanController extends Controller
      */
     public function create()
     {
-        //  return view('loans.create');
+         return view('loans.create');
     }
 
     /**
@@ -30,9 +30,16 @@ class LoanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            // atributes
-
+            'amount'=>'required|numeric',
+            'interestRate'=>'required|numeric',
+            'status'=>'required',
+            'paymentDate'=>'required|date'
         ]);
+
+        Loan::create($request->all());
+
+        return redirect()->route('loans.index')->with('success','Loan created succesfully');
+
     }
 
     /**
@@ -40,6 +47,7 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
+        return view('loans.show',compact('loan'));
     }
 
     /**
@@ -47,7 +55,7 @@ class LoanController extends Controller
      */
     public function edit(Loan $loan)
     {
-        //
+        return view('loans.update',compact('loan'));
     }
 
     /**
@@ -55,7 +63,17 @@ class LoanController extends Controller
      */
     public function update(Request $request, Loan $loan)
     {
-        //
+        
+        $request->validate([
+            'amount'=>'required|numeric',
+            'interestRate'=>'required|numeric',
+            'status'=>'required',
+            'paymentDate'=>'required|date'
+        ]);
+
+        $loan->update($request->all());
+        
+        return redirect()->route('loans.index')->with('success','Loan created succesfully');
     }
 
     /**
@@ -63,6 +81,7 @@ class LoanController extends Controller
      */
     public function destroy(Loan $loan)
     {
-        //
+    $loan->delete();
+    return redirect()->route('loans.index')->with('success', 'loan deleted successfully.') ;
     }
 }
