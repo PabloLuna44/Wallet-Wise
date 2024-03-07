@@ -82,8 +82,9 @@ class InvestmentController extends Controller
             'status'=> 'required',
         ]);
 
+        //Investment::where('id',$investment->id)->update($request->exept('_token','_method'));
         
-        Investment::create($request->all());
+        Investment::update($request->all());
 
         return redirect()->route('investment.index')->with('success', 'Investment created succesfully.');
     }
