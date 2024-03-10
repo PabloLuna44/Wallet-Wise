@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -34,6 +36,12 @@ class AccountController extends Controller
             'balance' => 'required|numeric',
         ]);
 
+        
+
+        $request->merge(['user_id' => Auth::id()]);
+
+        $user = User::where('id', Auth::id())->pluck('email')->first();
+        
         Account::create($request->all());
 
         return redirect()->route('accounts.index')->with('success', 'Account created successfully.');
