@@ -37,14 +37,7 @@ class TransactionController extends Controller
 
         // $request->merge(['id_account' => ]);
 
-        $transaction = new Transaction();
-        $transaction->amount = $request->amount;
-        $transaction->transactionType = $request->transactionType;
-        $transaction->dateTime = $request->dateTime;
-
-
-
-        $transaction->save();
+        Transaction::create($request->all());
 
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
@@ -76,11 +69,7 @@ class TransactionController extends Controller
             'dateTime' => 'required|date',
         ]);
 
-        $transaction->amount = $request->amount;
-        $transaction->transactionType = $request->transactionType;
-        $transaction->dateTime = $request->dateTime; // Corrección aquí
-
-        $transaction->save();
+        $transaction->update($request->all());
 
         return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
     }

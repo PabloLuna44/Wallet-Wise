@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('investments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->contrained()->onDelete('Cascade');
-            $table->string('accountType', 50);
-            $table->float('balance');
+            $table->string('type',50);
+            $table->float('amount');
+            $table->date('investmentDate');
+            $table->string('return');
+            $table->enum('status',['En curso', 'Finalizado']);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('investments');
     }
 };

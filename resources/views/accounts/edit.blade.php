@@ -8,14 +8,24 @@
 <body>
     <h1>Edit Account</h1>
     
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('accounts.update', $account->id) }}" method="POST">
         @csrf
         @method('PUT')
         <label for="accountType">Account Type:</label><br>
-        <input type="text" id="accountType" name="accountType" value="{{ $account->accountType }}"><br>
+        <input type="text" id="accountType" name="accountType" value="{{ old('accountType', $account->accountType) }}"><br>
 
         <label for="balance">Balance:</label><br>
-        <input type="text" id="balance" name="balance" value="{{ $account->balance }}"><br>
+        <input type="text" id="balance" name="balance" value="{{ old('balance', $account->balance) }}"><br>
 
         <button type="submit">Update Account</button>
     </form>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    use HasFactory;
+    protected $fillable = ['amount', 'transactionType', 'dateTime',];
 
     public function account(){
         return $this->belongsTo(Account::class);
