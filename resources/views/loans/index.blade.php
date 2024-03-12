@@ -1,40 +1,53 @@
+<!-- resources/views/loans/index.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Litado de todos los gastos</title>
+    <title>Loans List</title>
 </head>
-
 <body>
+    <h1>Loans List</h1>
 
-    <main>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        @foreach($loans as $loan)
+    <a href="{{ route('loans.create') }}">Create New Loan</a>
 
-            <h2>Gasto</h2>
-            <p>{{$loan->amount}}</p>
-            <p>{{$loan->interestRate}}</p>
-            <p>{{$loan->loanTerm}}</p>
-            <p>{{$loan->status}}</p>
-            <p>{{$loan->paymentDate}}</p>
-        
-
-            <a href="{{route('loans.show',$loan)}}">Ver Gasto</a> |
-                <a href="{{route('loans.edit',$loan)}}">Editar</a> |
-                <form action="{{ route('loans.destroy',$loan)}}" method="POST">
-                    @csrf 
-                    @method('DELETE')
-                    <input type="submit" value="Eliminar">
-                </form>
-
-
-        @endforeach
-
-    </main>
-
-
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amount</th>
+                <th>Interest Rate</th>
+                <th>Status</th>
+                <th>Payment Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($loans as $loan)
+                <tr>
+                    <td>{{ $loan->id }}</td>
+                    <td>{{ $loan->amount }}</td>
+                    <td>{{ $loan->interestRate }}</td>
+                    <td>{{ $loan->status }}</td>
+                    <td>{{ $loan->paymentDate }}</td>
+                    <td>
+                        <a href="{{ route('loans.show', $loan->id) }}">View</a>
+                        <a href="{{ route('loans.edit', $loan->id) }}">Edit</a>
+                        <form action="{{ route('loans.destroy', $loan->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </body>
-
 </html>

@@ -9,5 +9,5 @@ class Investment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type', 'amount', 'investmentDate','return','status'];
+    protected $fillable = ['type', 'amount', 'investmentDate', 'return', 'status'];
 }

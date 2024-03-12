@@ -32,7 +32,7 @@ class LoanController extends Controller
         $request->validate([
             'amount'=>'required|numeric',
             'interestRate'=>'required|numeric',
-            'status'=>'required',
+            'status'=>'required|in:Pendiente,Pagada,Vencido',
             'paymentDate'=>'required|date'
         ]);
 
@@ -55,7 +55,7 @@ class LoanController extends Controller
      */
     public function edit(Loan $loan)
     {
-        return view('loans.update',compact('loan'));
+        return view('loans.edit',compact('loan'));
     }
 
     /**
@@ -67,7 +67,7 @@ class LoanController extends Controller
         $request->validate([
             'amount'=>'required|numeric',
             'interestRate'=>'required|numeric',
-            'status'=>'required',
+            'status'=>'required|in:Pendiente,Pagada,Vencido',
             'paymentDate'=>'required|date'
         ]);
 
@@ -81,7 +81,8 @@ class LoanController extends Controller
      */
     public function destroy(Loan $loan)
     {
-    $loan->delete();
-    return redirect()->route('loans.index')->with('success', 'loan deleted successfully.') ;
+        $loan->delete();
+        
+        return redirect()->route('loans.index')->with('success', 'loan deleted successfully.') ;
     }
 }

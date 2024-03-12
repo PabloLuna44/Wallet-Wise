@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('amount');
             $table->date('investmentDate');
             $table->string('return');
-            $table->enum('status',['currently','finished']);
+            $table->enum('status',['En curso', 'Finalizado']);
             $table->timestamps();
         });
     }

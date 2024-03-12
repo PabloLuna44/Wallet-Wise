@@ -1,45 +1,44 @@
+<!-- resources/views/loans/create.blade.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Loan</title>
+</head>
+<body>
+    <h1>Create Loan</h1>
 
-<x-layout>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
+    <form method="POST" action="{{ route('loans.store') }}">
+        @csrf
 
-<h1>Registro de prestamo</h1>
+        <label for="amount">Amount:</label><br>
+        <input type="text" id="amount" name="amount" value="{{ old('amount') }}"><br>
 
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+        <label for="interestRate">Interest Rate:</label><br>
+        <input type="text" id="interestRate" name="interestRate" value="{{ old('interestRate') }}"><br>
 
-<form method="POST" action="/loans">
+        <label for="status">Status:</label><br>
+        <select id="status" name="status">
+            <option value="Pendiente" {{ old('status') == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
+            <option value="Pagada" {{ old('status') == 'Pagada' ? 'selected' : '' }}>Pagada</option>
+            <option value="Vencido" {{ old('status') == 'Vencido' ? 'selected' : '' }}>Vencido</option>
+        </select><br>
 
-    @csrf
+        <label for="paymentDate">Payment Date:</label><br>
+        <input type="date" id="paymentDate" name="paymentDate" value="{{ old('paymentDate') }}"><br>
 
-    <label for="amount">Monto de el prestamos</label>
-    <input type="number" name="amount" id="amount">
-
-    <label for="interestRate">Interes</label>
-    <input type="number" name="interestRate" id="interestRate">
-
-
-    <label for="status">Estado del prestamos</label>
-    <select name="status" id="staus">
-        <option value="pending">Pendiente</option>
-        <option value="paid">Pagada</option>
-        <option value="losing">Perdida</option>
-    </select>
-
-    <label for="paymentDate">Plazo del prestamos</label>
-    <input type="date" name="paymentDate" id="paymentDate" >
-    
-
-    <input type="submit" value="Enviar">
-
-</form>
-        
-
-</x-layout>
-
+        <button type="submit">Create Loan</button>
+    </form>
+</body>
+</html>

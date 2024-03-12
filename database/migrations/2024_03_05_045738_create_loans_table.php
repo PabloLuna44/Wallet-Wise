@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->float('amount');
             $table->float('interestRate');
-            $table->enum('status',['pending','paid','losing']);
+            $table->enum('status', ['Pendiente', 'Pagada', 'Vencido']);
             $table->date('paymentDate');
             $table->timestamps();
         });

@@ -1,11 +1,9 @@
 <?php
 
-
 use App\Http\Controllers\LoanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EarningController;
 use App\Http\Controllers\InvestmentController;
-use App\Models\Investment;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\TransactionController;
@@ -26,8 +24,7 @@ Route::resource('transactions', TransactionController::class);
 Route::resource('accounts', AccountController::class);
 Route::resource('earnings', EarningController::class);
 Route::resource('expenses', ExpenseController::class);
-Route::resource('/investment',InvestmentController::class);
-Route::resource('/loans',LoanController::class);
+Route::resource('loans', LoanController::class);
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,7 +36,7 @@ Route::get('/landing', function () {
 
 Route::middleware(['auth'])->group(function(){
 
-    Route::resource('/investment',InvestmentController::class);
+    Route::resource('investments',InvestmentController::class);
 
 });
 

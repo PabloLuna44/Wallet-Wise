@@ -1,31 +1,19 @@
+<!-- resources/views/loans/show.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gasto</title>
+    <title>Loan Details</title>
 </head>
 <body>
+    <h1>Loan Details</h1>
 
-@include('templates.header')
+    <p><strong>Amount:</strong> {{ $loan->amount }}</p>
+    <p><strong>Interest Rate:</strong> {{ $loan->interestRate }}</p>
+    <p><strong>Status:</strong> {{ $loan->status }}</p>
+    <p><strong>Payment Date:</strong> {{ $loan->paymentDate }}</p>
 
-
-<main>
-
-<h1>main</h1>
-
-<p>{{$loan->amount}}</p>
-<p>{{$loan->interestRate}}</p>
-<p>{{$loan->loanTerm}}</p>
-<p>{{$loan->status}}</p>
-<p>{{$loan->paymentDate}}</p>
-
-
-</main>
-
-
-@include('templates.footer')
-
-    
+    <a href="{{ route('loans.index') }}">Back to List</a>
 </body>
 </html>

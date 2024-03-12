@@ -11,7 +11,6 @@ class InvestmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     public function __construct()
     {
         $this->middleware('auth')->only(['index','create']);
@@ -19,8 +18,8 @@ class InvestmentController extends Controller
 
     public function index()
     {
-       $investments=Investment::all();
-       return view('investment.index',compact('investments'));
+       $investments = Investment::all();
+       return view('investments.index', compact('investments'));
     }
 
     /**
@@ -28,7 +27,7 @@ class InvestmentController extends Controller
      */
     public function create()
     {
-        return view('investment.create');
+        return view('investments.create');
     }
 
     /**
@@ -36,20 +35,17 @@ class InvestmentController extends Controller
      */
     public function store(Request $request)
     {
-
-        
         $request->validate([
             'type' => 'required|max:50',
-            'amount'=> 'required|numeric',
-            'investmentDate'=>'required|date',
-            'return'=> 'required|numeric',
-            'status'=> 'required',
+            'amount' => 'required|numeric',
+            'investmentDate' => 'required|date',
+            'return' => 'required|numeric',
+            'status' => 'required|in:En curso,Finalizado',
         ]);
 
-        
         Investment::create($request->all());
 
-        return redirect()->route('investment.index')->with('success', 'Investment created succesfully.');
+        return redirect()->route('investments.index')->with('success', 'Investment created successfully.');
     }
 
     /**
@@ -57,7 +53,7 @@ class InvestmentController extends Controller
      */
     public function show(Investment $investment)
     {
-        return view('investment.show', compact('investment'));
+        return view('investments.show', compact('investment'));
     }
 
     /**
@@ -65,7 +61,7 @@ class InvestmentController extends Controller
      */
     public function edit(Investment $investment)
     {
-        return view('investment.update',compact('investment'));
+        return view('investments.edit', compact('investment'));
     }
 
     /**
@@ -73,20 +69,17 @@ class InvestmentController extends Controller
      */
     public function update(Request $request, Investment $investment)
     {
-             
         $request->validate([
             'type' => 'required|max:50',
-            'amount'=> 'required|numeric',
-            'investmentDate'=>'required|date',
-            'return'=> 'required|numeric',
-            'status'=> 'required',
+            'amount' => 'required|numeric',
+            'investmentDate' => 'required|date',
+            'return' => 'required|numeric',
+            'status' => 'required|in:En curso,Finalizado',
         ]);
 
-        //Investment::where('id',$investment->id)->update($request->exept('_token','_method'));
-        
-        Investment::update($request->all());
+        $investment->update($request->all());
 
-        return redirect()->route('investment.index')->with('success', 'Investment created succesfully.');
+        return redirect()->route('investments.index')->with('success', 'Investment updated successfully.');
     }
 
     /**
@@ -95,7 +88,6 @@ class InvestmentController extends Controller
     public function destroy(Investment $investment)
     {
         $investment->delete();
-        return redirect()->route('investment.index')->with('success','delete investment');  
-    
+        return redirect()->route('investments.index')->with('success', 'Investment deleted successfully.');
     }
 }
