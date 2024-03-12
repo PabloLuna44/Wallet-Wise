@@ -10,4 +10,9 @@ class Account extends Model
     use HasFactory;
 
     protected $fillable = ['accountType', 'balance'];
+
+
+    public function transaction(){
+        return $this->hasMany(Transaction::class);
+    }
 }

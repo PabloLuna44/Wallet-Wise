@@ -35,10 +35,14 @@ class TransactionController extends Controller
             'dateTime' => 'required|date',
         ]);
 
+        // $request->merge(['id_account' => ]);
+
         $transaction = new Transaction();
         $transaction->amount = $request->amount;
         $transaction->transactionType = $request->transactionType;
         $transaction->dateTime = $request->dateTime;
+
+
 
         $transaction->save();
 
