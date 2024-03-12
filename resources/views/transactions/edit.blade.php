@@ -34,6 +34,14 @@
             <option value="Pago" {{ $transaction->transactionType == 'Pago' ? 'selected' : '' }}>Pago</option>
         </select><br>
 
+          <label for="accounts_id">Account</label><br>
+        <select id="accounts_id" name="accounts_id">
+            @foreach($accounts as $account)
+            <option value="{{$account->id}}">{{$account->accountType}}</option>
+            @endforeach
+        </select><br>
+
+
         <label for="dateTime">Date Time:</label><br>
         <input type="datetime-local" id="dateTime" name="dateTime" value="{{ old('dateTime', date('Y-m-d\TH:i', strtotime($transaction->dateTime))) }}"><br>
 
