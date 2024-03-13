@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -12,8 +14,23 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all();
-        return view('transactions.index', compact('transactions'));
+        // Obtener todas las cuentas del usuario autenticado
+    $accounts = Account::where('user_id', Auth::id())->get();
+
+    // Inicializar un array para almacenar todas las transacciones
+    $transactions = [];
+
+    // Recorrer cada cuenta y obtener las transacciones asociadas
+    foreach ($accounts as $account) {
+        // Obtener las transacciones para la cuenta actual
+        $transactions1 = Transaction::where('accounts_id', $account->id)->get();
+
+        // Agregar las transacciones al array general
+        $transactions = array_merge($transactions, $transactions1->all());
+    }
+
+    // Pasar todas las transacciones a la vista
+    return view('transactions.index', compact('transactions'));
     }
 
     /**
@@ -21,7 +38,8 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('transactions.create');
+        $accounts = Account::where('user_id', Auth::id())->get();
+        return view('transactions.create',compact('accounts'));
     }
 
     /**
@@ -34,6 +52,10 @@ class TransactionController extends Controller
             'transactionType' => 'required|in:Depósito,Retiro,Transferencia,Pago',
             'dateTime' => 'required|date',
         ]);
+
+        
+
+        // $request->merge(['id_account' => ]);
 
         Transaction::create($request->all());
 
@@ -53,7 +75,8 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        return view('transactions.edit', compact('transaction'));
+        $accounts = Account::where('user_id', Auth::id())->get();
+        return view('transactions.edit', compact('transaction','accounts'));
     }
 
     /**
