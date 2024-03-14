@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-
 
 class TransactionController extends Controller
 {
@@ -14,6 +14,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
+
         $user = Auth::user();
         $accounts = $user->accounts()->with('transactions')->get();
 
@@ -29,7 +30,8 @@ class TransactionController extends Controller
         $user = Auth::user();
         $accounts = $user->accounts;
         
-        return view('transactions.create', compact('accounts'));
+       return view('transactions.create', compact('accounts'));
+
     }
 
     /**
@@ -44,16 +46,8 @@ class TransactionController extends Controller
             'account_id' => 'required|exists:accounts,id',
         ]);
 
-        // Obtain the account_id from the request
-        $accountId = $request->input('account_id');
 
-        // Create the transaction with the provided account_id
-        Transaction::create([
-            'amount' => $request->input('amount'),
-            'transactionType' => $request->input('transactionType'),
-            'dateTime' => $request->input('dateTime'),
-            'account_id' => $accountId,
-        ]);
+        Transaction::create($request->all());
 
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
@@ -71,7 +65,8 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        return view('transactions.edit', compact('transaction'));
+        $accounts = Account::where('user_id', Auth::id())->get();
+        return view('transactions.edit', compact('transaction','accounts'));
     }
 
     /**

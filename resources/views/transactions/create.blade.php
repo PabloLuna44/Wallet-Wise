@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Transaction</title>
 </head>
+
 <body>
     <h1>Create New Transaction</h1>
     
@@ -29,10 +31,20 @@
             <option value="Pago">Pago</option>
         </select><br>
 
-        <label for="dateTime">Date:</label><br>
-        <input type="datetime-local" id="dateTime" name="dateTime"><br><br>
+
+        <label for="accounts_id">Account</label><br>
+        <select id="accounts_id" name="accounts_id">
+            @foreach($accounts as $account)
+            <option value="{{$account->id}}">{{$account->accountType}}</option>
+            @endforeach
+        </select><br>
+
+        <label for="dateTime">Date Time:</label><br>
+        <input type="datetime-local" id="dateTime" name="dateTime" value="{{ old('dateTime') }}"><br>
+
 
         <input type="submit" value="Submit">
     </form>
 </body>
+
 </html>
