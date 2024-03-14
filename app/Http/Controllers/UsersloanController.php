@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usersloan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersloanController extends Controller
 {
@@ -20,15 +21,15 @@ class UsersloanController extends Controller
      */
     public function create()
     {
-        //
+        return view('userloans/create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $user,Request $loan)
+    public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -36,7 +37,10 @@ class UsersloanController extends Controller
      */
     public function show(Usersloan $usersloan)
     {
-        //
+        $user=Auth::id();
+        $userLoan=Usersloan::where('id_user',$user);
+        
+
     }
 
     /**
