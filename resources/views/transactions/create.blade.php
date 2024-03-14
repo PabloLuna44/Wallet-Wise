@@ -9,9 +9,20 @@
 
 <body>
     <h1>Create New Transaction</h1>
-    
+
     <form action="{{ route('transactions.store') }}" method="POST">
         @csrf
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
 
         <label for="account_id">Select Account:</label><br>
         <select id="account_id" name="account_id">
@@ -31,13 +42,6 @@
             <option value="Pago">Pago</option>
         </select><br>
 
-
-        <label for="accounts_id">Account</label><br>
-        <select id="accounts_id" name="accounts_id">
-            @foreach($accounts as $account)
-            <option value="{{$account->id}}">{{$account->accountType}}</option>
-            @endforeach
-        </select><br>
 
         <label for="dateTime">Date Time:</label><br>
         <input type="datetime-local" id="dateTime" name="dateTime" value="{{ old('dateTime') }}"><br>
