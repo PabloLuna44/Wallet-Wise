@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $fillable = ['amount', 'transactionType', 'dateTime',];
+    protected $fillable = ['account_id', 'amount', 'transactionType', 'dateTime',];
+
+    public function account(){
+        return $this->belongsTo(Account::class);
+    }
 }
