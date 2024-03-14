@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+
     protected $fillable = ['amount', 'transactionType','accounts_id', 'dateTime',];
 
     public function account(){

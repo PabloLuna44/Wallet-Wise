@@ -1,4 +1,3 @@
-<!-- resources/views/transactions/create.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,22 +9,19 @@
 
 <body>
     <h1>Create New Transaction</h1>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form method="POST" action="{{ route('transactions.store') }}">
+    
+    <form action="{{ route('transactions.store') }}" method="POST">
         @csrf
 
+        <label for="account_id">Select Account:</label><br>
+        <select id="account_id" name="account_id">
+            @foreach ($accounts as $account)
+                <option value="{{ $account->id }}">{{ $account->accountType }}</option>
+            @endforeach
+        </select><br>
+
         <label for="amount">Amount:</label><br>
-        <input type="text" id="amount" name="amount" value="{{ old('amount') }}"><br>
+        <input type="text" id="amount" name="amount"><br>
 
         <label for="transactionType">Transaction Type:</label><br>
         <select id="transactionType" name="transactionType">
@@ -34,7 +30,6 @@
             <option value="Transferencia">Transferencia</option>
             <option value="Pago">Pago</option>
         </select><br>
-
 
 
         <label for="accounts_id">Account</label><br>
@@ -47,7 +42,8 @@
         <label for="dateTime">Date Time:</label><br>
         <input type="datetime-local" id="dateTime" name="dateTime" value="{{ old('dateTime') }}"><br>
 
-        <button type="submit">Create Transaction</button>
+
+        <input type="submit" value="Submit">
     </form>
 </body>
 

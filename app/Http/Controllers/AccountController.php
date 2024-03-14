@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,8 +13,10 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $accounts = Account::where('user_id', Auth::id())->get();
-        return view('accounts.index',compact('accounts'));
+        $user = Auth::user();
+        $accounts = $user->accounts;
+
+        return view('accounts.index', compact('accounts'));
     }
 
     /**
@@ -36,13 +37,8 @@ class AccountController extends Controller
             'balance' => 'required|numeric',
         ]);
 
-        
-
-        $request->merge(['user_id' => Auth::id()]);
-
-        $user = User::where('id', Auth::id())->pluck('email')->first();
-        
-        Account::create($request->all());
+        $user = Auth::user();
+        $user->accounts()->create($request->all());
 
         return redirect()->route('accounts.index')->with('success', 'Account created successfully.');
     }

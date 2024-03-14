@@ -14,32 +14,24 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        // Obtener todas las cuentas del usuario autenticado
-    $accounts = Account::where('user_id', Auth::id())->get();
 
-    // Inicializar un array para almacenar todas las transacciones
-    $transactions = [];
+        $user = Auth::user();
+        $accounts = $user->accounts()->with('transactions')->get();
 
-    // Recorrer cada cuenta y obtener las transacciones asociadas
-    foreach ($accounts as $account) {
-        // Obtener las transacciones para la cuenta actual
-        $transactions1 = Transaction::where('accounts_id', $account->id)->get();
-
-        // Agregar las transacciones al array general
-        $transactions = array_merge($transactions, $transactions1->all());
+        return view('transactions.index', compact('accounts'));
     }
 
-    // Pasar todas las transacciones a la vista
-    return view('transactions.index', compact('transactions'));
-    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $accounts = Account::where('user_id', Auth::id())->get();
-        return view('transactions.create',compact('accounts'));
+        $user = Auth::user();
+        $accounts = $user->accounts;
+        
+       return view('transactions.create', compact('accounts'));
+
     }
 
     /**
@@ -51,11 +43,9 @@ class TransactionController extends Controller
             'amount' => 'required|numeric',
             'transactionType' => 'required|in:Depósito,Retiro,Transferencia,Pago',
             'dateTime' => 'required|date',
+            'account_id' => 'required|exists:accounts,id',
         ]);
 
-        
-
-        // $request->merge(['id_account' => ]);
 
         Transaction::create($request->all());
 
@@ -67,7 +57,7 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        return view('transactions.show', compact('transaction'));;
+        return view('transactions.show', compact('transaction'));
     }
 
     /**
@@ -90,12 +80,14 @@ class TransactionController extends Controller
             'dateTime' => 'required|date',
         ]);
 
-        $transaction->update($request->all());
+        $transaction->update([
+            'amount' => $request->input('amount'),
+            'transactionType' => $request->input('transactionType'),
+            'dateTime' => $request->input('dateTime'),
+        ]);
 
         return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -104,6 +96,6 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-        return redirect()->route('transaction.index')->with('success', 'Transaction deleted successfuly.');
+        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
     }
 }
