@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Loan;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,13 +21,18 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class
         ]);
 
-        \App\Models\User::factory(10)->create();
+        User::factory(10)
+        ->has(Loan::factory()->count(3))
+        ->create();
 
-        \App\Models\User::factory()
+        User::factory()
             ->withPersonalTeam()
             ->create([
                 'name'=> 'Test User',
                 'email'=>'test@example.com'
             ]);
+
+
+        
     }
 }
