@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Bootstrap 5 Admin Template</title>
+    <title>{{$namePage}} | {{$title}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -21,11 +21,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="{{asset('build/assets/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+    <link href="{{asset('build/assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('build/assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('build/assets/css/bootstrap.css')}}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="{{asset('build/assets/css/style.css')}}" rel="stylesheet">
@@ -191,7 +191,7 @@
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                            &copy; <a href="#">{{$namePage}}</a>,{{$year}} All Right Reserved. 
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->

@@ -8,13 +8,18 @@ use Illuminate\View\Component;
 
 class Layout extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct(public string $namePage ="WalletWise")
+    public $title;
+    public $namePage = "Wallet Wise";
+    public $year = '';
+
+    public function __construct($title, $namePage = null, $year = null)
     {
-        
+        $this->title = $title;
+        // Asigna los parámetros opcionales solo si se proporcionan
+        $this->namePage = $namePage ?? $this->namePage;
+        $this->year = $year !== '' ? $year : date('Y');
     }
+
 
     /**
      * Get the view / contents that represent the component.
