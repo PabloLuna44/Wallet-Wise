@@ -14,11 +14,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-
+        $title="Transations";
         $user = Auth::user();
         $accounts = $user->accounts()->with('transactions')->get();
 
-        return view('transactions.index', compact('accounts'));
+        return view('transactions.index', compact('accounts','title'));
     }
 
 
@@ -27,10 +27,11 @@ class TransactionController extends Controller
      */
     public function create()
     {
+        $title="Transations Create";
         $user = Auth::user();
         $accounts = $user->accounts;
         
-       return view('transactions.create', compact('accounts'));
+       return view('transactions.create', compact('accounts','title'));
 
     }
 
@@ -57,7 +58,8 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        return view('transactions.show', compact('transaction'));
+        $title="Transations Show";
+        return view('transactions.show', compact('transaction','title'));
     }
 
     /**
@@ -65,8 +67,9 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
+        $title="Transations Edit";
         $accounts = Account::where('user_id', Auth::id())->get();
-        return view('transactions.edit', compact('transaction','accounts'));
+        return view('transactions.edit', compact('transaction','accounts','title'));
     }
 
     /**
