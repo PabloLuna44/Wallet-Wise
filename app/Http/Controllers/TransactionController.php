@@ -14,7 +14,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $title="Transations";
+        $title="Transactions";
         $user = Auth::user();
         $accounts = $user->accounts()->with('transactions')->get();
 
@@ -27,9 +27,12 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $title="Transations Create";
+
+     
+        $title="Transactions Create";
         $user = Auth::user();
         $accounts = $user->accounts;
+        
         
        return view('transactions.create', compact('accounts','title'));
 
@@ -40,13 +43,20 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $account = Account::with('transactions')->find($request->account_id);
         $request->validate([
-            'amount' => 'required|numeric',
+            'amount' => 'max:'.$account->balance.'|numeric|required',
             'transactionType' => 'required|in:Depósito,Retiro,Transferencia,Pago',
             'dateTime' => 'required|date',
             'account_id' => 'required|exists:accounts,id',
+        ],
+        [
+            'amount.max' => 'The amount cannot be greater than the account balance..'
         ]);
 
+
+    
 
         Transaction::create($request->all());
 
@@ -58,8 +68,19 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        $title="Transations Show";
-        return view('transactions.show', compact('transaction','title'));
+        $title="Transactions Show";
+        
+        $account = Account::with('transactions')->find($transaction->account_id);
+        
+        $transactionData = [
+            'Amount' => $transaction->amount,
+            'Transaction Type' => $transaction->transactionType,
+            'Date Time' => $transaction->dateTime,
+            'Account' =>$account->accountType
+        ];
+    
+        
+        return view('transactions.show', compact('transactionData','title'));
     }
 
     /**
@@ -67,7 +88,7 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        $title="Transations Edit";
+        $title="Transactions Edit";
         $accounts = Account::where('user_id', Auth::id())->get();
         return view('transactions.edit', compact('transaction','accounts','title'));
     }
@@ -77,10 +98,15 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
+        $account = Account::with('transactions')->find($transaction->account_id);
+        
         $request->validate([
-            'amount' => 'required|numeric',
+            'amount' => 'max:'.$account->balance.'|numeric|required',
             'transactionType' => 'required|in:Depósito,Retiro,Transferencia,Pago',
             'dateTime' => 'required|date',
+        ],
+        [
+            'amount.max' => 'The amount cannot be greater than the account balance..'
         ]);
 
         $transaction->update([

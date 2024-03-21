@@ -1,37 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounts</title>
-</head>
-<body>
+<x-layout :title="$title">
+
     <h1>Accounts</h1>
-    <a href="{{ route('accounts.create') }}">Create New Account</a>
-    
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Account Type</th>
-            <th>Balance</th>
-            <th>Actions</th>
-        </tr>
-        @foreach($accounts as $account)
-        <tr>
-            <td>{{ $account->id }}</td>
-            <td>{{ $account->accountType }}</td>
-            <td>{{ $account->balance }}</td>
-            <td>
-                <a href="{{ route('accounts.show', $account->id) }}">View</a>
-                <a href="{{ route('accounts.edit', $account->id) }}">Edit</a>
-                <form action="{{ route('accounts.destroy', $account->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </table>
-</body>
-</html>
+    <div>
+        <a class="btn btn-primary m-2" href="{{ route('accounts.create') }}">Create New Account</a>
+    </div>
+    @php
+
+    $AccountData = [
+    ['Account Type', 'Balance']
+    ];
+    foreach ($accounts as $account) {
+    $actions = '<a class="btn btn-outline-primary m-2" href="'.route('accounts.show', $account->id).'">Ver</a> '.
+    '<a class="btn btn-outline-primary m-2" href="'.route('accounts.edit', $account->id).'">Editar</a> '.
+    '<form action="'.route('accounts.destroy', $account->id).'" method="POST">'.
+        '<input type="hidden" name="_token" value="'.csrf_token().'">'.
+        '<input type="hidden" name="_method" value="DELETE">'.
+        '<button type="submit" class="btn btn-outline-danger m-2">Eliminar</button>'.
+        '</form>';
+    $AccountData[] = [
+    $account->accountType,
+    $account->balance,
+    $actions
+    ];
+    }
+    @endphp
+
+    {{-- Renderizar la tabla genérica --}}
+    <x-table-responsive :title="$title" :object="$AccountData" />
+</x-layout>

@@ -1,32 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Account</title>
-</head>
-<body>
+<x-layout :title="$title">
     <h1>Create New Account</h1>
-    
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <x-form :title="$title">
+        <form action="{{ route('accounts.store') }}" method="POST">
+            @csrf
+            <label for="accountType">Account Type:</label><br>
+            <input type="text" id="accountType" name="accountType" class="form-control" value="{{ old('accountType') }}"><br>
 
-    <form action="{{ route('accounts.store') }}" method="POST">
-        @csrf
-        <label for="accountType">Account Type:</label><br>
-        <input type="text" id="accountType" name="accountType" value="{{ old('accountType') }}"><br>
+            <label for="balance">Balance:</label><br>
+            <input type="text" id="balance" name="balance" class="form-control" value="{{ old('balance') }}"><br>
 
-        <label for="balance">Balance:</label><br>
-        <input type="text" id="balance" name="balance" value="{{ old('balance') }}"><br>
+            <button type="submit" class="btn btn-primary" >Create Account</button>
+        </form>
 
-        <button type="submit">Create Account</button>
-    </form>
-</body>
-</html>
+    </x-form>
+</x-layout>

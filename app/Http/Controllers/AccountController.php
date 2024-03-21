@@ -13,10 +13,11 @@ class AccountController extends Controller
      */
     public function index()
     {
+        $title="Accounts";
         $user = Auth::user();
         $accounts = $user->accounts;
 
-        return view('accounts.index', compact('accounts'));
+        return view('accounts.index', compact('accounts','title'));
     }
 
     /**
@@ -24,7 +25,8 @@ class AccountController extends Controller
      */
     public function create()
     {
-        return view('accounts.create');
+        $title="Accounts Create";
+        return view('accounts.create',compact('title'));
     }
 
     /**
@@ -48,7 +50,14 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        return view('accounts.show', compact('account'));
+        $title="Accounts Show";
+        $accountData = [
+            'Account Type' => $account->accountType,
+            'Balance' => $account->balance,
+           
+        ];
+    
+        return view('accounts.show', compact('accountData','title'));
     }
 
     /**
@@ -56,7 +65,8 @@ class AccountController extends Controller
      */
     public function edit(Account $account)
     {
-        return view('accounts.edit', compact('account'));
+        $title="Accounts Edit";
+        return view('accounts.edit', compact('account','title'));
     }
 
     /**

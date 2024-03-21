@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{asset('build/assets/img/favicon.ico')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,33 +45,33 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
+                <a href="{{route('dashboard') }}" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa  me-2"><img src="{{asset('build/assets/img/logo.webp')}}" style="max-width: 50px;" alt=""></i>{{$namePage}}</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="{{asset('build/assets/img/logo4.webp')}}" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
+                        <h6 class="mb-0">{{Auth::user()->name}}</h6>
                         <span>Admin</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="button.html" class="dropdown-item">Buttons</a>
                             <a href="typography.html" class="dropdown-item">Typography</a>
                             <a href="element.html" class="dropdown-item">Other Elements</a>
                         </div>
-                    </div>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                    </div> -->
+                    <a href="{{route('accounts.index')}}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Accounts</a>
+                    <a href="{{route('transactions.index')}}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Transactions</a>
+                    <a href="{{route('investments.index')}}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Investement</a>
+                    <a href="{{route('loans.index')}}" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Loans</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -111,7 +111,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="{{asset('build/assets/img/logo4.webp')}}" alt="" style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -121,7 +121,7 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="{{asset('build/assets/img/logo4.webp')}}" alt="" style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -131,7 +131,7 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="{{asset('build/assets/img/logo4.webp')}}" alt="" style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -145,7 +145,7 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Notificatin</span>
+                            <span class="d-none d-lg-inline-flex">Notification</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
@@ -168,19 +168,23 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <img class="rounded-circle me-lg-2" src="{{asset('build/assets/img/logo4.webp')}}" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">{{Auth::user()->name}}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="{{route('profile.show')}}" class="dropdown-item">My Profile</a>
+                            <a href="{{route('profile.show')}}"" class="dropdown-item">Settings</a>
+                            <form action="{{route('logout')}}" method="POST">
+                                @csrf
+                                <input type="submit" class="dropdown-item" value="Log out">
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
-            {{$namePage}}
+            
 
 
             <!--CONTENIDO DE OTRO ARCHIVO -->
