@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->float('amount');
+            $table->decimal('amount',10,2);
             $table->enum('transactionType', ['Depósito', 'Retiro', 'Transferencia', 'Pago']);
             $table->dateTime('dateTime');
             $table->foreignId('account_id')->constrained()->onDelete('cascade');

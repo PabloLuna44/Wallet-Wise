@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->contrained()->onDelete('Cascade');
             $table->string('accountType', 50);
-            $table->float('balance');
+            $table->decimal('balance',10,2);
             $table->timestamps();
         });
     }

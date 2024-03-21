@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
-            $table->float('amount');
+            $table->decimal('amount',10,2);
             $table->float('interestRate');
             $table->enum('status', ['Pendiente', 'Pagada', 'Vencido']);
             $table->date('paymentDate');
