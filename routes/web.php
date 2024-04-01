@@ -25,11 +25,11 @@ Route::resource('earnings', EarningController::class);
 Route::resource('expenses', ExpenseController::class);
 Route::resource('loans', LoanController::class);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/landing', function () {
+Route::get('/', function () {
     return view('landingPage');
 });
 
