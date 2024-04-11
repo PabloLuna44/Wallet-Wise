@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestMail;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TransactionController extends Controller
 {
@@ -44,6 +46,8 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         
+        $userEmail= Auth::user()->email;
+        Mail::to($userEmail)->send(new TestMail());
         $account = Account::with('transactions')->find($request->account_id);
         $request->validate([
             'amount' => 'max:'.$account->balance.'|numeric|required',
