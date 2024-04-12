@@ -1,7 +1,7 @@
 <x-layout :title="$title">
     <h1>Create New Transaction</h1>
     <x-form :title="$title">
-        <form action="{{ route('transactions.store') }}" method="POST">
+        <form action="{{ route('transactions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <label for="account_id">Select Account:</label><br>
@@ -25,6 +25,13 @@
 
             <label for="dateTime">Date Time:</label><br>
             <input type="datetime-local" id="dateTime" name="dateTime" value="{{ old('dateTime') }}" class="form-control"><br>
+
+            <hr>
+            <h2>Archivos</h2>
+            <div class="mt-4">
+                <x-label for="file" value="{{ __('File') }}" />
+                <x-input id="file" class="block mt-1 w-full" type="file" name="file"  />
+            </div>
 
 
             <input type="submit" value="Submit" class="btn btn-primary">

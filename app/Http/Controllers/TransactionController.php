@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\TestMail;
 use App\Models\Account;
+use App\Models\Files;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -46,8 +47,11 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         
-        $userEmail= Auth::user()->email;
-        Mail::to($userEmail)->send(new TestMail());
+        // $userEmail= Auth::user()->email;
+        // Mail::to($userEmail)->send(new TestMail());
+        
+      
+
         $account = Account::with('transactions')->find($request->account_id);
         $request->validate([
             'amount' => 'max:'.$account->balance.'|numeric|required',
@@ -62,7 +66,17 @@ class TransactionController extends Controller
 
     
 
-        Transaction::create($request->all());
+        $transaction=Transaction::create($request->all());
+        if($request->file('file')->isValid()){
+            $path=$request->file('file')->store('public/files_transactions');
+
+            $file=new Files();
+            $file->location=$path;
+            $file->name=$request->file->getClientOriginalName();
+            $file->mime_type=$request->file->getClientMimeType();
+            $file->transaction_id=$transaction->id;
+            $file->save();
+        }
 
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
