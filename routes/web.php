@@ -34,7 +34,7 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth','verified'])->group(function(){
 
     Route::resource('investments',InvestmentController::class);
     Route::resource('transactions', TransactionController::class);
