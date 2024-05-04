@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Investment;
-use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InvestmentController extends Controller
 {
@@ -13,13 +13,18 @@ class InvestmentController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->only(['index','create']);
+        $this->middleware('auth')->only(['index', 'create']);
     }
 
     public function index()
     {
-       $investments = Investment::all();
-       return view('investments.index', compact('investments'));
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // Obtener todas las inversiones del usuario autenticado
+        $investments = $user->investments;
+
+        return view('investments.index', compact('investments'));
     }
 
     /**
@@ -43,7 +48,8 @@ class InvestmentController extends Controller
             'status' => 'required|in:En curso,Finalizado',
         ]);
 
-        Investment::create($request->all());
+        $user = Auth::user();
+        $user->investments()->create($request->all());
 
         return redirect()->route('investments.index')->with('success', 'Investment created successfully.');
     }

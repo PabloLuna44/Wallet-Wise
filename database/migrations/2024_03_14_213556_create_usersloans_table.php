@@ -9,12 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('users_loans', function (Blueprint $table) {
+        Schema::create('usersloans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('loan_id');
+            $table->foreignId('user_id')->constrained()->onDelete('Cascade');
+            $table->foreignId('loan_id')->constrained()->onDelete('Cascade');
             $table->timestamps();
         });
     }

@@ -12,6 +12,6 @@ class Loan extends Model
     protected $fillable = ['amount', 'interestRate', 'status', 'paymentDate'];
 
     public function users(){
-        return $this->belongsToMany(Loan::class,'users_loans');
+        return $this->belongsToMany(User::class,'usersloans');
     }
 }

@@ -64,6 +64,10 @@ class User extends Authenticatable
     }
 
     public function loans(){
-        return $this->belongsToMany(Loan::class,'users_loans');
+        return $this->belongsToMany(Loan::class,'usersloans');
+    }
+
+    public function investments(){
+        return $this->hasMany(Investment::class);
     }
 }

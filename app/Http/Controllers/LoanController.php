@@ -3,17 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Loan;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['index', 'create']);
+    }
+    
     public function index()
     {
-        $loans= Loan::all();
-        return view('loans.index',compact('loans'));
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+        // Obtener todos los préstamos del usuario autenticado
+        $loans = $user->loans;
+
+        return view('loans.index', compact('loans'));
     }
 
     /**
@@ -21,7 +32,10 @@ class LoanController extends Controller
      */
     public function create()
     {
-         return view('loans.create');
+        // Obtener todos los usuarios para la lista despegable
+        $users = User::all();
+
+        return view('loans.create', compact('users'));
     }
 
     /**
@@ -33,13 +47,25 @@ class LoanController extends Controller
             'amount'=>'required|numeric',
             'interestRate'=>'required|numeric',
             'status'=>'required|in:Pendiente,Pagada,Vencido',
-            'paymentDate'=>'required|date'
+            'paymentDate'=>'required|date',
         ]);
 
-        Loan::create($request->all());
+        // Crea el préstamo y lo guarda en la base de datos
+        $loan = Loan::create($request->except('user_ids'));
 
-        return redirect()->route('loans.index')->with('success','Loan created succesfully');
+        // Asocia el préstamo al usuario autenticado
+        $user = Auth::user();
+        $user->loans()->attach($loan->id);
 
+        // Asocia los usuarios seleccionados al préstamo
+        if ($request->filled('selectedUserIds')) {
+            $selectedUserIds = explode(',', $request->input('selectedUserIds'));
+            foreach ($selectedUserIds as $userId) {
+                $loan->users()->attach($userId);
+            }
+        }
+
+        return redirect()->route('loans.index')->with('success','Loan created successfully');
     }
 
     /**
@@ -47,7 +73,7 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
-        return view('loans.show',compact('loan'));
+        return view('loans.show', compact('loan'));
     }
 
     /**
@@ -55,7 +81,11 @@ class LoanController extends Controller
      */
     public function edit(Loan $loan)
     {
-        return view('loans.edit',compact('loan'));
+        // Obtener todos los usuarios de la base de datos
+        $users = User::all();
+
+        // Pasar los datos del préstamo y los usuarios a la vista
+        return view('loans.edit', compact('loan', 'users'));
     }
 
     /**
@@ -63,7 +93,6 @@ class LoanController extends Controller
      */
     public function update(Request $request, Loan $loan)
     {
-        
         $request->validate([
             'amount'=>'required|numeric',
             'interestRate'=>'required|numeric',
@@ -71,10 +100,16 @@ class LoanController extends Controller
             'paymentDate'=>'required|date'
         ]);
 
+        // Actualizar los datos del préstamo
         $loan->update($request->all());
-        
-        return redirect()->route('loans.index')->with('success','Loan created succesfully');
+
+        // Actualizar la asociación entre el préstamo y los usuarios seleccionados
+        $selectedUserIds = explode(',', $request->input('selectedUserIds'));
+        $loan->users()->sync($selectedUserIds);
+
+        return redirect()->route('loans.index')->with('success','Loan updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -83,6 +118,7 @@ class LoanController extends Controller
     {
         $loan->delete();
         
-        return redirect()->route('loans.index')->with('success', 'loan deleted successfully.') ;
+        return redirect()->route('loans.index')->with('success', 'Loan deleted successfully') ;
     }
 }
+

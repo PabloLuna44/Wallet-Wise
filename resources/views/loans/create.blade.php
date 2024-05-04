@@ -38,7 +38,44 @@
         <label for="paymentDate">Payment Date:</label><br>
         <input type="date" id="paymentDate" name="paymentDate" value="{{ old('paymentDate') }}"><br>
 
+        <label for="selectedUser">Select User:</label><br>
+        <select id="selectedUser" name="selectedUser">
+            @foreach($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
+        </select><br>
+
+        <button type="button" onclick="addUser()">Add User</button>
+
+        <div id="selectedUsers">
+            <!-- Aquí se mostrarán los usuarios seleccionados -->
+        </div>
+
+        <input type="hidden" id="selectedUserIds" name="selectedUserIds" value="">
+
         <button type="submit">Create Loan</button>
     </form>
+
+    <script>
+        var selectedUsers = [];
+    
+        function addUser() {
+            var userId = document.getElementById("selectedUser").value;
+            var userName = document.getElementById("selectedUser").options[document.getElementById("selectedUser").selectedIndex].text; // Obtiene el nombre del usuario seleccionado
+            selectedUsers.push({id: userId, name: userName}); // Almacena el ID y el nombre del usuario
+            displaySelectedUsers();
+        }
+    
+        function displaySelectedUsers() {
+            var selectedUsersDiv = document.getElementById("selectedUsers");
+            selectedUsersDiv.innerHTML = "";
+            selectedUsers.forEach(function(user) {
+                var userElement = document.createElement("div");
+                userElement.textContent = "User: " + user.name; // Muestra el nombre del usuario
+                selectedUsersDiv.appendChild(userElement);
+            });
+            document.getElementById("selectedUserIds").value = selectedUsers.map(user => user.id).join(","); // Almacena solo los IDs separados por coma
+        }
+    </script>    
 </body>
 </html>
