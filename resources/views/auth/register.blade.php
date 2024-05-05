@@ -20,6 +20,11 @@
             </div>
 
             <div class="mt-4">
+                <x-label for="profile_photo_path" value="{{ __('Profile Photo') }}" />
+                <x-input id="profile_photo_path" class="block mt-1 w-full" type="file" name="profile_photo_path" :value="old('profile_photo_path')" required autocomplete="profile_photo_path" />
+            </div>
+
+            <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>
