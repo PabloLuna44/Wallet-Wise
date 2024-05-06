@@ -22,9 +22,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 
-Route::resource('earnings', EarningController::class);
-Route::resource('expenses', ExpenseController::class);
-Route::resource('loans', LoanController::class);
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -39,6 +37,9 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::resource('investments',InvestmentController::class);
     Route::resource('transactions', TransactionController::class);
     Route::resource('accounts', AccountController::class);
+    Route::resource('earnings', EarningController::class);
+    Route::resource('expenses', ExpenseController::class);
+    Route::resource('loans', LoanController::class);
 
 });
 

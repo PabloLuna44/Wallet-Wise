@@ -4,8 +4,8 @@
         <form action="{{ route('accounts.update', $account->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <label for="accountType">Account Type:</label><br>
-            <input type="text" id="accountType" name="accountType" class="form-control" value="{{ old('accountType', $account->accountType) }}"><br>
+            <label for="account_type">Account Type:</label><br>
+            <input type="text" id="account_type" name="account_type" class="form-control" value="{{ old('account_type', $account->account_type) }}"><br>
 
             <label for="balance">Balance:</label><br>
             <input type="text" id="balance" name="balance" class="form-control" value="{{ old('balance', $account->balance) }}"><br>

@@ -9,5 +9,13 @@ class Usersloan extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'loan_id'];
+
+    function user(){
+        return $this->belongsToMany(User::class);
+    }
+    function loan(){
+        return $this->belongsToMany(Loan::class);
+    }
     
 }

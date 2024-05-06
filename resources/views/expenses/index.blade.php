@@ -1,43 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-layout :title="$title">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Litado de todos los gastos</title>
-</head>
+    <h2>Expenses</h2>
 
-<body>
-
+    <div>
+        <a class="btn btn-primary m-2" href="{{ route('expenses.create') }}">Create A New Transaction</a>
+    </div>
+    <br>
+    @php
+    $expensesData = [
+    ['Description', 'Expending', 'Expense Date','Actions']
+    ];
     
 
+    foreach($expenses as $expense){
+    
+    $actions='<a class="btn btn-outline-primary m-2" href="'.route('expenses.show', $expense->id).'">Ver</a> '.
+    '<a class="btn btn-outline-primary m-2" href="'.route('expenses.edit', $expense->id).'">Editar</a> '.
+    '<form action="'.route('expenses.destroy', $expense->id).'" method="POST">'.
+                                    '<input type="hidden"  name="_token" value="'.csrf_token().'">'.
+                                    '<input type="hidden"  name="_method" value="DELETE">'.
+                                    '<button type="submit" class="btn btn-outline-danger m-2">Eliminar</button>'.
+                               '</form>';
+    $expensesData[] = [
+    $expense->description,
+    $expense->spending,
+    $expense->expense_date,
+    $actions
+    ];
 
-    <main>
-
-        @foreach($expenses as $expense)
-
-            <h2>Gasto</h2>
-            <p>{{$expense->description}}</p>
-            <p>{{$expense->spending}}</p>
-            <p>{{$expense->expenseDate}}</p>
-
-            <a href="{{route('expense.show',$expense)}}">Ver Gasto</a> |
-                <a href="{{route('expense.edit',$expense)}}">Editar</a> |
-                <form action="{{ route('expense.destroy',$expense)}}" method="POST">
-                    @csrf 
-                    @method('DELETE')
-                    <input type="submit" value="Eliminar">
-                </form>
-
-
-        @endforeach
-
-    </main>
-
-
+    }
+    @endphp
+    
     
 
+    <x-table-responsive :title=" 'Expenses' " :object="$expensesData" />
 
-</body>
 
-</html>
+
+
+</x-layout>

@@ -18,7 +18,7 @@
         '<button type="submit" class="btn btn-outline-danger m-2">Eliminar</button>'.
         '</form>';
     $AccountData[] = [
-    $account->accountType,
+    $account->account_type,
     $account->balance,
     $actions
     ];

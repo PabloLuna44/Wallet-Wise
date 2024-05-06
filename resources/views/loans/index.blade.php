@@ -1,53 +1,43 @@
-<!-- resources/views/loans/index.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loans List</title>
-</head>
-<body>
-    <h1>Loans List</h1>
+<x-layout :title="$title">
 
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    <h2>Loans</h2>
 
-    <a href="{{ route('loans.create') }}">Create New Loan</a>
+    <div>
+        <a class="btn btn-primary m-2" href="{{ route('loans.create') }}">Create A New Loan</a>
+    </div>
+    <br>
+    @php
+    $loanData = [
+    ['Amount', 'Interest Rate', 'Status', 'Payment Date']
+    ];
+    
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Amount</th>
-                <th>Interest Rate</th>
-                <th>Status</th>
-                <th>Payment Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($loans as $loan)
-                <tr>
-                    <td>{{ $loan->id }}</td>
-                    <td>{{ $loan->amount }}</td>
-                    <td>{{ $loan->interestRate }}</td>
-                    <td>{{ $loan->status }}</td>
-                    <td>{{ $loan->paymentDate }}</td>
-                    <td>
-                        <a href="{{ route('loans.show', $loan->id) }}">View</a>
-                        <a href="{{ route('loans.edit', $loan->id) }}">Edit</a>
-                        <form action="{{ route('loans.destroy', $loan->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html>
+    foreach($loans as $loan){
+    
+    $actions='<a class="btn btn-outline-primary m-2" href="'.route('loans.show', $loan->id).'">Ver</a> '.
+    '<a class="btn btn-outline-primary m-2" href="'.route('loans.edit', $loan->id).'">Editar</a> '.
+    '<form action="'.route('loans.destroy', $loan->id).'" method="POST">'.
+                                    '<input type="hidden"  name="_token" value="'.csrf_token().'">'.
+                                    '<input type="hidden"  name="_method" value="DELETE">'.
+                                    '<button type="submit" class="btn btn-outline-danger m-2">Eliminar</button>'.
+                               '</form>';
+    $loanData[] = [
+    $loan->amount,
+    $loan->interest_rate,
+    $loan->status,
+    $loan->payment_date,
+
+    $actions
+    ];
+
+    }
+    @endphp
+    
+    
+
+    <x-table-responsive :title=" 'Loans' " :object="$loanData" />
+
+
+
+
+</x-layout>

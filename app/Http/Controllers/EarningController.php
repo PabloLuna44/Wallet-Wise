@@ -12,8 +12,9 @@ class EarningController extends Controller
      */
     public function index()
     {
-        $earnings = Earning::all();
-        return view('earnings.index', compact('earnings'));
+        $title="Earnings Index";
+        $earnings = Earning::where('user_id', auth()->id())->get();
+        return view('earnings.index', compact('earnings','title'));
     }
 
     /**
@@ -21,7 +22,8 @@ class EarningController extends Controller
      */
     public function create()
     {
-        return view('earnings.create');
+        $title="Earnings Create";
+        return view('earnings.create',compact('title'));
     }
 
     /**
@@ -32,8 +34,9 @@ class EarningController extends Controller
         $request->validate([
             'description' => 'required|max:50',
             'gain' => 'required|numeric',
-            'earningDate' => 'required|date',
+            'earning_date' => 'required|date',
         ]);
+        $request['user_id'] = auth()->id();
 
         Earning::create($request->all());
 
@@ -45,7 +48,17 @@ class EarningController extends Controller
      */
     public function show(Earning $earning)
     {
-        return view('earnings.show', compact('earning'));
+        $title="Earnings Show";
+
+        $earningData=[
+            'type' => 'earnings', 
+            'id' => $earning->id,
+            'Description' => $earning->description,
+            'Gain' => $earning->gain,
+            'Earning Date' => $earning->earning_date,
+        ];
+
+        return view('earnings.show', compact('earningData','title'));
     }
 
     /**
@@ -53,7 +66,8 @@ class EarningController extends Controller
      */
     public function edit(Earning $earning)
     {
-        return view('earnings.edit', compact('earning'));
+        $title="Earnings Edit";
+        return view('earnings.edit', compact('earning','title'));
     }
 
     /**
@@ -64,8 +78,10 @@ class EarningController extends Controller
         $request->validate([
             'description' => 'required|max:50',
             'gain' => 'required|numeric',
-            'earningDate' => 'required|date',
+            'earning_date' => 'required|date',
         ]);
+
+        $earning->user_id = auth()->id();
 
         $earning->update($request->all());
 

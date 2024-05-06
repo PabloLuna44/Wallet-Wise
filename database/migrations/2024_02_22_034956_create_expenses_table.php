@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('description');
             $table->decimal('spending',10,2);
-            $table->date('expenseDate');
+            $table->date('expense_date');
+            $table->foreignId('user_id')->constrained()->onDelete('Cascade');
             $table->timestamps();
         });
     }

@@ -12,9 +12,12 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses=Expense::all();
+        $expenses = Expense::where('user_id', auth()->id())->get();
+        $title = 'Expenses Index';
 
-        return view('expenses.index',compact('expenses'));
+        
+
+        return view('expenses.index', compact('expenses', 'title'));
     }
 
     /**
@@ -22,7 +25,9 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return view('expenses.create');
+
+        $title = 'Expenses Create';
+        return view('expenses.create', compact('title'));
     }
 
     /**
@@ -30,24 +35,23 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-     $request->validate([
-        'description'=>['required'],
-        'spending'=>['required'],
-        'expenseDate'=>['required']
-     ]);
-     
-     $expense=new Expense();
-     $expense->description=$request->description;
-     $expense->spending=$request->spending;
-     $expense->expenseDate=$request->expenseDate;
+        $request->validate([
+            'description' => ['required', 'string', 'max:255'],
+            'spending' => ['required', 'numeric', 'min:0'],
+            'expense_date' => ['required', 'date']
+        ]);
 
-     
-
-     $expense->save();
+        $expense = new Expense();
+        $expense->description = $request->description;
+        $expense->spending = $request->spending;
+        $expense->expense_date = $request->expense_date;
+        $expense->user_id = auth()->id();
 
 
-     return redirect('/expense');
+        $expense->save();
 
+
+        return redirect()->route('expenses.index');
     }
 
     /**
@@ -55,7 +59,15 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
-        return view('expenses.show',compact('expense'));
+        $title = 'Expenses Show';
+        $expenseData = [
+            'type' => 'expenses', 
+            'id' => $expense->id,
+            'Description' => $expense->description,
+            'Spending' => $expense->spending,
+            'Expense Date' => $expense->expense_date
+        ];
+        return view('expenses.show', compact('expenseData','title',));
     }
 
     /**
@@ -63,7 +75,8 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        return view('expenses.update',compact('expense'));
+        $title = 'Expenses Edit';
+        return view('expenses.edit', compact('expense', 'title'));
     }
 
     /**
@@ -73,19 +86,19 @@ class ExpenseController extends Controller
     {
 
         $request->validate([
-            'description'=>['required'],
-            'spending'=>['required'],
-            'expenseDate'=>['required']
-         ]);
-    
-         $expense->description=$request->description;
-         $expense->spending=$request->spending;
-         $expense->expenseDate=$request->expenseDate;
-    
-         $expense->save();
-    
-    
-         return view('expenses.show',compact('expense'));
+            'description' => ['required', 'string', 'max:255'],
+            'spending' => ['required', 'numeric', 'min:0'],
+            'expense_date' => ['required', 'date']
+        ]);
+
+        $expense->description = $request->description;
+        $expense->spending = $request->spending;
+        $expense->expense_date = $request->expense_date;
+
+        $expense->save();
+
+
+        return redirect()->route('expenses.show', compact('expense'));
     }
 
     /**
@@ -94,6 +107,6 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         $expense->delete();
-        return redirect()->route('expense.index');
+        return redirect()->route('expenses.index');
     }
 }

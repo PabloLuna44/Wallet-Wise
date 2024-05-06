@@ -19,9 +19,9 @@ class LoanFactory extends Factory
         //'amount', 'interestRate', 'status', 'paymentDate'
         return [
             'amount' => $this->faker->randomFloat(2, 100, 10000),
-            'interestRate' => $this->faker->randomFloat(2, 1, 10),
+            'interest_rate' => $this->faker->randomFloat(2, 1, 10),
             'status' => $this->faker->randomElement(['Pendiente', 'Pagada', 'Vencido']),
-            'paymentDate' => $this->faker->date(),
+            'payment_date' => $this->faker->date(),
         ];
     }
 }

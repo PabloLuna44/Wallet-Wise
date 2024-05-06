@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('Cascade');
-            $table->string('accountType', 50);
+            $table->string('account_type', 50);
             $table->decimal('balance',10,2);
             $table->timestamps();
         });
