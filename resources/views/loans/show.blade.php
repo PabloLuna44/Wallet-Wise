@@ -1,26 +1,45 @@
-<!-- resources/views/loans/show.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Loan</title>
-</head>
-<body>
-    <h1>Show Loan</h1>
+<x-layout :title="$title">
 
-    <p><strong>Amount:</strong> {{ $loan->amount }}</p>
-    <p><strong>Interest Rate:</strong> {{ $loan->interestRate }}</p>
-    <p><strong>Status:</strong> {{ $loan->status }}</p>
-    <p><strong>Payment Date:</strong> {{ $loan->paymentDate }}</p>
+    <!-- Table with Loan Data -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-secondary rounded-top p-4">
+            <h6 class="mb-4">Loan Information</h6>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Amount:</th>
+                            <td>{{ $loan->amount }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Interest Rate:</th>
+                            <td>{{ $loan->interest_rate }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Status:</th>
+                            <td>{{ $loan->status }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Payment Date:</th>
+                            <td>{{ $loan->payment_date }}</td>
+                        </tr>
+                        <!-- Row for Associated Users -->
+                        <tr>
+                            <th scope="row">Associated Users:</th>
+                            <td>
+                                <ul>
+                                    @foreach($loan->users as $user)
+                                        <li>{{ $user->name }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-    <h2>Associated Users</h2>
-    <ul>
-        @foreach($loan->users as $user)
-            <li>{{ $user->name }}</li>
-        @endforeach
-    </ul>
+    <a href="{{ route('loans.index') }}" class="btn btn-primary m-2">Back to Loans</a>
 
-    <a href="{{ route('loans.index') }}">Back to Loans</a>
-</body>
-</html>
+</x-layout>

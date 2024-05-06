@@ -6,7 +6,7 @@
 
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
             @csrf
 
             <div>
@@ -21,7 +21,8 @@
 
             <div class="mt-4">
                 <x-label for="profile_photo_path" value="{{ __('Profile Photo') }}" />
-                <x-input id="profile_photo_path" class="block mt-1 w-full" type="file" name="profile_photo_path" :value="old('profile_photo_path')" required autocomplete="profile_photo_path" />
+                <x-input id="profile_photo_path" class="block mt-1 w-full" type="file" name="profile_photo_path" :value="old('profile_photo_path')" autocomplete="profile_photo_path" onchange="previewFile(this);" />
+                <img id="preview" src="" alt="Profile photo preview" style="max-width: 200px; margin-top: 10px;">
             </div>
 
             <div class="mt-4">
@@ -35,20 +36,20 @@
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="mt-4">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
+            <div class="mt-4">
+                <x-label for="terms">
+                    <div class="flex items-center">
+                        <x-checkbox name="terms" id="terms" required />
 
-                            <div class="ms-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Privacy Policy').'</a>',
-                                ]) !!}
-                            </div>
+                        <div class="ms-2">
+                            {!! __('I agree to the :terms_of_service and :privacy_policy', [
+                            'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Terms of Service').'</a>',
+                            'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Privacy Policy').'</a>',
+                            ]) !!}
                         </div>
-                    </x-label>
-                </div>
+                    </div>
+                </x-label>
+            </div>
             @endif
 
             <div class="flex items-center justify-end mt-4">
@@ -63,3 +64,19 @@
         </form>
     </x-authentication-card>
 </x-guest-layout>
++
+<script>
+      function previewFile(input) {
+        var file = input.files[0];
+
+        if(file) {
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                document.getElementById('preview').src = reader.result;
+            }
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

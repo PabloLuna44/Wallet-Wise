@@ -80,6 +80,7 @@ class LoanController extends Controller
     public function show(Loan $loan)
     {
         $title = "Loans Show";
+        
         return view('loans.show', compact('loan','title'));
     }
 
