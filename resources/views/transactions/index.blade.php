@@ -3,6 +3,7 @@
 
     <div>
         <a class="btn btn-primary m-2" href="{{ route('transactions.create') }}">Create A New Transaction</a>
+        <a href="{{ route('transactions.recycle') }}" class="btn btn-primary">Recycle Bin</a>
     </div>
     <br>
 

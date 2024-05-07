@@ -129,6 +129,20 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
+        return redirect()->route('transactions.index')->with('success', 'Transaction soft deleted successfully.');
+    }
+
+    public function forceDelete(Transaction $transaction)
+    {
+        $transaction->forceDelete();
+
         return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
+    }
+
+    public function recycle()
+    {
+        $recycledTransactions = Auth::user()->transactions()->onlyTrashed()->get();
+
+        return view('transactions.recycle', compact('recycledTransactions'));
     }
 }
