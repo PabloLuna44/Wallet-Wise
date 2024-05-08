@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['amount', 'transactionType','account_id', 'dateTime',];
+    protected $fillable = ['amount', 'transaction_type','account_id', 'date_time',];
 
     public function account(){
         return $this->belongsTo(Account::class);

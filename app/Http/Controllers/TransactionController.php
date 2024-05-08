@@ -16,11 +16,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $title="Transactions";
+        $title = "Transactions";
         $user = Auth::user();
         $accounts = $user->accounts()->with('transactions')->get();
 
-        return view('transactions.index', compact('accounts','title'));
+        return view('transactions.index', compact('accounts', 'title'));
     }
 
 
@@ -30,14 +30,13 @@ class TransactionController extends Controller
     public function create()
     {
 
-     
-        $title="Transactions Create";
+
+        $title = "Transactions Create";
         $user = Auth::user();
         $accounts = $user->accounts;
-        
-        
-       return view('transactions.create', compact('accounts','title'));
 
+
+        return view('transactions.create', compact('accounts', 'title'));
     }
 
     /**
@@ -45,22 +44,24 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $userEmail= Auth::user()->email;
+
+        $userEmail = Auth::user()->email;
         Mail::to($userEmail)->send(new TestMail());
         $account = Account::with('transactions')->find($request->account_id);
-        $request->validate([
-            'amount' => 'max:'.$account->balance.'|numeric|required',
-            'transactionType' => 'required|in:Depósito,Retiro,Transferencia,Pago',
-            'dateTime' => 'required|date',
-            'account_id' => 'required|exists:accounts,id',
-        ],
-        [
-            'amount.max' => 'The amount cannot be greater than the account balance..'
-        ]);
+        $request->validate(
+            [
+                'amount' => 'max:' . $account->balance . '|numeric|required',
+                'transaction_type' => 'required|in:Depósito,Retiro,Transferencia,Pago',
+                'date_time' => 'required|date',
+                'account_id' => 'required|exists:accounts,id',
+            ],
+            [
+                'amount.max' => 'The amount cannot be greater than the account balance..'
+            ]
+        );
 
 
-    
+
 
         Transaction::create($request->all());
 
@@ -72,20 +73,21 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        $title="Transactions Show";
-        
+        $title = "Transactions Show";
+
         $account = Account::with('transactions')->find($transaction->account_id);
-        
+
         $transactionData = [
+            'type' => 'transactions',
             'id' => $transaction->id,
             'Amount' => $transaction->amount,
-            'Transaction Type' => $transaction->transactionType,
-            'Date Time' => $transaction->dateTime,
-            'Account' =>$account->accountType
+            'Transaction Type' => $transaction->transaction_type,
+            'Date Time' => $transaction->date_time,
+            'Account' => $account->account_type
         ];
-    
-        
-        return view('transactions.show', compact('transactionData','title'));
+
+
+        return view('transactions.show', compact('transactionData', 'title'));
     }
 
     /**
@@ -93,9 +95,9 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        $title="Transactions Edit";
+        $title = "Transactions Edit";
         $accounts = Account::where('user_id', Auth::id())->get();
-        return view('transactions.edit', compact('transaction','accounts','title'));
+        return view('transactions.edit', compact('transaction', 'accounts', 'title'));
     }
 
     /**
@@ -104,20 +106,22 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         $account = Account::with('transactions')->find($transaction->account_id);
-        
-        $request->validate([
-            'amount' => 'max:'.$account->balance.'|numeric|required',
-            'transactionType' => 'required|in:Depósito,Retiro,Transferencia,Pago',
-            'dateTime' => 'required|date',
-        ],
-        [
-            'amount.max' => 'The amount cannot be greater than the account balance..'
-        ]);
+
+        $request->validate(
+            [
+                'amount' => 'max:' . $account->balance . '|numeric|required',
+                'transaction_type' => 'required|in:Depósito,Retiro,Transferencia,Pago',
+                'date_time' => 'required|date',
+            ],
+            [
+                'amount.max' => 'The amount cannot be greater than the account balance..'
+            ]
+        );
 
         $transaction->update([
             'amount' => $request->input('amount'),
-            'transactionType' => $request->input('transactionType'),
-            'dateTime' => $request->input('dateTime'),
+            'transaction_type' => $request->input('transaction_type'),
+            'date_time' => $request->input('date_time'),
         ]);
 
         return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
@@ -140,10 +144,27 @@ class TransactionController extends Controller
         return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
     }
 
+    public function restore($id)
+    {
+        Transaction::withTrashed()->find($id)->restore();
+
+        return redirect()->route('transactions.index')->with('success', 'Transaction restored successfully.');
+    }
+
+    
+
+
     public function recycle()
     {
-        $recycledTransactions = Auth::user()->transactions()->onlyTrashed()->get();
+        $title="Recycled Transactions";
+        
+        
+        $recycledTransactions = Auth::user()->accounts()->with(['transactions' => function ($query) {
+            $query->onlyTrashed();
+        }])->get();
+        
+        
 
-        return view('transactions.recycle', compact('recycledTransactions'));
+        return view('transactions.recycle', compact('recycledTransactions', 'title'));
     }
 }

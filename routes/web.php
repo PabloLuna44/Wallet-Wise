@@ -33,11 +33,15 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
+
+
 Route::middleware(['auth','verified'])->group(function(){
 
     Route::resource('investments',InvestmentController::class);
-    Route::resource('transactions', TransactionController::class);
     Route::get('transactions/recycle',[TransactionController::class,'recycle'])->name('transactions.recycle');
+    Route::post('transactions/restore/{id}',[TransactionController::class,'restore'])->name('transactions.restore');
+    Route::delete('transactions/force-delete/{id}',[TransactionController::class,'forceDelete'])->name('transactions.force-delete');    
+    Route::resource('transactions', TransactionController::class);
     Route::resource('accounts', AccountController::class);
     Route::resource('earnings', EarningController::class);
     Route::resource('expenses', ExpenseController::class);
