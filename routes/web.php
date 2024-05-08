@@ -23,9 +23,7 @@ use Laravel\Jetstream\Rules\Role;
 */
 
 
-Route::resource('earnings', EarningController::class);
-Route::resource('expenses', ExpenseController::class);
-Route::resource('loans', LoanController::class);
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -41,6 +39,9 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::resource('transactions', TransactionController::class);
     Route::get('transactions/recycle',[TransactionController::class,'recycle'])->name('transactions.recycle');
     Route::resource('accounts', AccountController::class);
+    Route::resource('earnings', EarningController::class);
+    Route::resource('expenses', ExpenseController::class);
+    Route::resource('loans', LoanController::class);
 
 });
 

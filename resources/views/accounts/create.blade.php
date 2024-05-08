@@ -3,8 +3,8 @@
     <x-form :title="$title">
         <form action="{{ route('accounts.store') }}" method="POST">
             @csrf
-            <label for="accountType">Account Type:</label><br>
-            <input type="text" id="accountType" name="accountType" class="form-control" value="{{ old('accountType') }}"><br>
+            <label for="account_type">Account Type:</label><br>
+            <input type="text" id="accoun_type" name="account_type" class="form-control" value="{{ old('account_type') }}"><br>
 
             <label for="balance">Balance:</label><br>
             <input type="text" id="balance" name="balance" class="form-control" value="{{ old('balance') }}"><br>

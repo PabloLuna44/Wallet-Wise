@@ -1,47 +1,46 @@
-<!-- resources/views/investment/index.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investments</title>
-</head>
-<body>
-    <h1>Investments</h1>
+<x-layout :title="$title">
 
-    <a href="{{ route('investments.create') }}">Create New Investment</a>
+    <h2>Investments</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Investment Date</th>
-                <th>Return</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($investments as $investment)
-            <tr>
-                <td>{{ $investment->type }}</td>
-                <td>{{ $investment->amount }}</td>
-                <td>{{ $investment->investmentDate }}</td>
-                <td>{{ $investment->return }}</td>
-                <td>{{ $investment->status }}</td>
-                <td>
-                    <a href="{{ route('investments.show', $investment->id) }}">View</a>
-                    <a href="{{ route('investments.edit', $investment->id) }}">Edit</a>
-                    <form method="POST" action="{{ route('investments.destroy', $investment->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</body>
-</html>
+    <div>
+        <a class="btn btn-primary m-2" href="{{ route('investments.create') }}">Create A New Transaction</a>
+    </div>
+    <br>
+    @php
+    $investmentData = [
+    ['Type', 'Amount', 'Investment Date', 'Return', 'Status']
+    ];
+    
+    
+
+    foreach($investments as $investment){
+    
+    $actions='<a class="btn btn-outline-primary m-2" href="'.route('investments.show', $investment->id).'">Ver</a> '.
+    '<a class="btn btn-outline-primary m-2" href="'.route('investments.edit', $investment->id).'">Editar</a> '.
+    '<form action="'.route('investments.destroy', $investment->id).'" method="POST">'.
+                                    '<input type="hidden"  name="_token" value="'.csrf_token().'">'.
+                                    '<input type="hidden"  name="_method" value="DELETE">'.
+                                    '<button type="submit" class="btn btn-outline-danger m-2">Eliminar</button>'.
+                               '</form>';
+    $investmentData[] = [
+    $investment->type,
+    $investment->amount,
+    $investment->investment_date,
+    $investment->return,
+    $investment->status,
+
+    
+    $actions
+    ];
+
+    }
+    @endphp
+    
+    
+
+    <x-table-responsive :title=" 'Invesrments' " :object="$investmentData" />
+
+
+
+
+</x-layout>

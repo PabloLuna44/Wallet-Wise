@@ -9,7 +9,7 @@ class Investment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'type', 'amount', 'investmentDate', 'return', 'status'];
+    protected $fillable = ['user_id', 'type', 'amount', 'investment_date', 'return', 'status'];
 
     public function user()
     {

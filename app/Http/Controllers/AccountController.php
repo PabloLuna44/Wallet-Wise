@@ -35,7 +35,7 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'accountType' => 'required|max:50',
+            'account_type' => 'required|max:50',
             'balance' => 'required|numeric',
         ]);
 
@@ -52,7 +52,9 @@ class AccountController extends Controller
     {
         $title="Accounts Show";
         $accountData = [
-            'Account Type' => $account->accountType,
+            'type' => 'accounts',
+            'id'=>$account->id,
+            'Account Type' => $account->account_type,
             'Balance' => $account->balance,
            
         ];
@@ -75,7 +77,7 @@ class AccountController extends Controller
     public function update(Request $request, Account $account)
     {
         $request->validate([
-            'accountType' => 'required|max:50',
+            'account_type' => 'required|max:50',
             'balance' => 'required|numeric',
         ]);
 

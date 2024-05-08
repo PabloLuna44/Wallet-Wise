@@ -1,47 +1,30 @@
-<!-- resources/views/investment/update.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Investment</title>
-</head>
-<body>
-    <h1>Edit Investment</h1>
+<x-layout :title="$title">
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <h2>{{$title}}</h2>
+    <x-form :title="$title">
 
-    <form method="POST" action="{{ route('investments.update', $investment->id) }}">
-        @csrf
-        @method('PUT')
+        <form method="POST" action="{{ route('investments.store') }}">
+            @csrf
+            <label for="type">Type:</label><br>
+            <input type="text" id="type" name="type" class="form-control " value="{{ old('type',$investment->type) }}"><br>
 
-        <label for="type">Type:</label><br>
-        <input type="text" id="type" name="type" value="{{ old('type', $investment->type) }}"><br>
+            <label for="amount">Amount:</label><br>
+            <input type="text" id="amount" name="amount" class="form-control " value="{{ old('amount',$investment->amount) }}"><br>
 
-        <label for="amount">Amount:</label><br>
-        <input type="text" id="amount" name="amount" value="{{ old('amount', $investment->amount) }}"><br>
+            <label for="investment_date">Investment Date:</label><br>
+            <input type="date" id="investment_date" name="investment_date" class="form-control mb-3" value="{{ old('investment_date',$investment->investment_date) }}"><br>
 
-        <label for="investmentDate">Investment Date:</label><br>
-        <input type="date" id="investmentDate" name="investmentDate" value="{{ old('investmentDate', $investment->investmentDate) }}"><br>
+            <label for="return">Return:</label><br>
+            <input type="text" id="return" name="return" class="form-control " value="{{ old('return',$investment->return) }}"><br>
 
-        <label for="return">Return:</label><br>
-        <input type="text" id="return" name="return" value="{{ old('return', $investment->return) }}"><br>
+            <label for="status">Status:</label><br>
+            <select id="status" name="status" class="form-select form-select-sm mb-3">
+                <option value="En curso" {{ old('status',$investment->status) == 'En curso' ? 'selected' : '' }}>En curso</option>
+                <option value="Finalizado" {{ old('status',$investment->status) == 'Finalizado' ? 'selected' : '' }}>Finalizado</option>
+            </select><br>
 
-        <label for="status">Status:</label><br>
-        <select id="status" name="status">
-            <option value="En curso" {{ $investment->status == 'En curso' ? 'selected' : '' }}>En curso</option>
-            <option value="Finalizado" {{ $investment->status == 'Finalizado' ? 'selected' : '' }}>Finalizado</option>
-        </select><br>
+            <input type="submit" value="Enviar" class="btn btn-primary">
+        </form>
 
-        <button type="submit">Update Investment</button>
-    </form>
-</body>
-</html>
+    </x-form>
+</x-layout>

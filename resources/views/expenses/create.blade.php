@@ -1,40 +1,31 @@
 
-<x-layout>
+<x-layout :title="$title">
 
-        <h1>Registro de gasto</h1>
+        <h2>{{$title}}</h2>
+      <x-form :title="$title">
 
-<body>
-
-  
-
-        <h1>Form</h1>
-
-        <form method="POST" action="/expense">
+      
+        <form method="POST" action="{{ route('expenses.store') }}">
 
             @csrf
 
+          
             <label for="description">Description</label>
-            <input type="text" name="description" id="description">
+            <input type="text" name="description" id="description" class="form-control mb-3" value="{{ old('description') }}">
 
             <label for="spending">Gasto</label>
-            <input type="number" name="spending" id="spending">
+            <input type="number" name="spending" id="spending" class="form-control mb-3" value="{{ old('spending') }}">
 
-            <label for="expenseDate">Fecha</label>
-            <input type="date" name="expenseDate" id="expenseDate">
+            <label for="expense_date">Fecha</label>
+            <input type="date" name="expense_date" id="expense_date" class="form-control mb-3" value="{{ old('expense_date') }}">
 
-            <input type="submit" value="Enviar">
+            <input type="submit" value="Enviar" class="btn btn-primary">
+
+            
 
         </form>
 
-
+        </x-form>
 </x-layout>
-
-    </main>
-
-
-    
-
-
-</body>
 
 

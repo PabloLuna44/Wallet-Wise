@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('Cascade'); 
             $table->string('type',50);
             $table->decimal('amount',10,2);
-            $table->date('investmentDate');
+            $table->date('investment_date');
             $table->string('return');
             $table->enum('status',['En curso', 'Finalizado']);
             $table->timestamps();

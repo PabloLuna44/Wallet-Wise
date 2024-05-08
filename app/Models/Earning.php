@@ -9,5 +9,5 @@ class Earning extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['description', 'gain', 'earningDate'];
+    protected $fillable = ['description', 'gain', 'earning_date','user_id'];
 }

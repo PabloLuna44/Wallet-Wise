@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount',10,2);
-            $table->float('interestRate');
+            $table->float('interest_rate');
             $table->enum('status', ['Pendiente', 'Pagada', 'Vencido']);
-            $table->date('paymentDate');
+            $table->date('payment_date');
             $table->timestamps();
         });
     }

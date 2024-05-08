@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('description', 50);
             $table->decimal('gain',10,2);
-            $table->date('earningDate');
+            $table->date('earning_date');
+            $table->foreignId('user_id')->constrained()->onDelete('Cascade');
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Loan;
 use App\Models\User;
+use App\Models\Usersloan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,12 +20,16 @@ class LoanController extends Controller
     
     public function index()
     {
+        $title = "Loans Index";
         // Obtener el usuario autenticado
         $user = Auth::user();
         // Obtener todos los préstamos del usuario autenticado
         $loans = $user->loans;
+        $loanIds = Usersloan::where('user_id', $user->id)->pluck('loan_id');
+        $debtor = User::whereIn('id', $loanIds)->pluck('name');
 
-        return view('loans.index', compact('loans'));
+
+        return view('loans.index', compact('loans','title','debtor'));
     }
 
     /**
@@ -34,8 +39,9 @@ class LoanController extends Controller
     {
         // Obtener todos los usuarios para la lista despegable
         $users = User::all();
+        $title = "Loans Create";
 
-        return view('loans.create', compact('users'));
+        return view('loans.create', compact('users','title'));
     }
 
     /**
@@ -45,9 +51,9 @@ class LoanController extends Controller
     {
         $request->validate([
             'amount'=>'required|numeric',
-            'interestRate'=>'required|numeric',
+            'interest_rate'=>'required|numeric',
             'status'=>'required|in:Pendiente,Pagada,Vencido',
-            'paymentDate'=>'required|date',
+            'payment_date'=>'required|date',
         ]);
 
         // Crea el préstamo y lo guarda en la base de datos
@@ -73,7 +79,9 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
-        return view('loans.show', compact('loan'));
+        $title = "Loans Show";
+        
+        return view('loans.show', compact('loan','title'));
     }
 
     /**
@@ -81,11 +89,12 @@ class LoanController extends Controller
      */
     public function edit(Loan $loan)
     {
+        $title = "Loans Edit";
         // Obtener todos los usuarios de la base de datos
         $users = User::all();
 
         // Pasar los datos del préstamo y los usuarios a la vista
-        return view('loans.edit', compact('loan', 'users'));
+        return view('loans.edit', compact('loan', 'users','title'));
     }
 
     /**
@@ -95,9 +104,9 @@ class LoanController extends Controller
     {
         $request->validate([
             'amount'=>'required|numeric',
-            'interestRate'=>'required|numeric',
+            'interest_rate'=>'required|numeric',
             'status'=>'required|in:Pendiente,Pagada,Vencido',
-            'paymentDate'=>'required|date'
+            'payment_date'=>'required|date'
         ]);
 
         // Actualizar los datos del préstamo

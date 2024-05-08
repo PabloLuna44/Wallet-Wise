@@ -9,7 +9,7 @@ class Loan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['amount', 'interestRate', 'status', 'paymentDate'];
+    protected $fillable = ['amount', 'interest_rate', 'status', 'payment_date'];
 
     public function users(){
         return $this->belongsToMany(User::class,'usersloans');

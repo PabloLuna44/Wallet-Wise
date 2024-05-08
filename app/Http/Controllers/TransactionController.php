@@ -77,6 +77,7 @@ class TransactionController extends Controller
         $account = Account::with('transactions')->find($transaction->account_id);
         
         $transactionData = [
+            'id' => $transaction->id,
             'Amount' => $transaction->amount,
             'Transaction Type' => $transaction->transactionType,
             'Date Time' => $transaction->dateTime,

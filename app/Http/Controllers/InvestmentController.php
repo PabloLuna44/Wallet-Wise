@@ -18,13 +18,13 @@ class InvestmentController extends Controller
 
     public function index()
     {
+        $title="Investment Index";
         // Obtener el usuario autenticado
         $user = Auth::user();
-
         // Obtener todas las inversiones del usuario autenticado
         $investments = $user->investments;
-
-        return view('investments.index', compact('investments'));
+        
+        return view('investments.index', compact('investments','title'));
     }
 
     /**
@@ -32,7 +32,8 @@ class InvestmentController extends Controller
      */
     public function create()
     {
-        return view('investments.create');
+        $title="Investment Create";
+        return view('investments.create',compact('title'));
     }
 
     /**
@@ -43,7 +44,7 @@ class InvestmentController extends Controller
         $request->validate([
             'type' => 'required|max:50',
             'amount' => 'required|numeric',
-            'investmentDate' => 'required|date',
+            'investment_date' => 'required|date',
             'return' => 'required|numeric',
             'status' => 'required|in:En curso,Finalizado',
         ]);
@@ -59,7 +60,18 @@ class InvestmentController extends Controller
      */
     public function show(Investment $investment)
     {
-        return view('investments.show', compact('investment'));
+        $title="Investment Show";
+        $investmentData = [
+            'type' => 'investments',
+            'id' => $investment->id,
+            'Type Investment' => $investment->type, 
+            'Amount' => $investment->amount,
+            'Investment Date' => $investment->investment_date,
+            'Return' => $investment->return,
+            'Status' => $investment->status
+            
+        ];
+        return view('investments.show', compact('title','investmentData'));
     }
 
     /**
@@ -67,7 +79,8 @@ class InvestmentController extends Controller
      */
     public function edit(Investment $investment)
     {
-        return view('investments.edit', compact('investment'));
+        $title="Investment Edit";
+        return view('investments.edit', compact('investment','title'));
     }
 
     /**
@@ -78,7 +91,7 @@ class InvestmentController extends Controller
         $request->validate([
             'type' => 'required|max:50',
             'amount' => 'required|numeric',
-            'investmentDate' => 'required|date',
+            'investment_date' => 'required|date',
             'return' => 'required|numeric',
             'status' => 'required|in:En curso,Finalizado',
         ]);
