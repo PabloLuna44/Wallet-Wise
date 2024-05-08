@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('transaction_type', ['Depósito', 'Retiro', 'Transferencia', 'Pago']);
             $table->dateTime('date_time');
             $table->foreignId('account_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();
 
             $table->timestamps();
         });

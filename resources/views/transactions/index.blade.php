@@ -3,12 +3,13 @@
 
     <div>
         <a class="btn btn-primary m-2" href="{{ route('transactions.create') }}">Create A New Transaction</a>
+        <a href="{{ route('transactions.recycle')}}" class="btn btn-primary">Recycle Bin</a>
     </div>
     <br>
 
     @foreach ($accounts as $account)
         <div>
-            <h3>Account Type: {{ $account->accountType }}</h3>
+            <h3>Account Type: {{ $account->account_type }}</h3>
             <p>Balance: {{ $account->balance }}</p>
             @php
                 // Organizar los datos de las transacciones de la cuenta en un array
@@ -25,15 +26,15 @@
                                '</form>';
                     $transactionsData[] = [
                         $transaction->amount,
-                        $transaction->transactionType,
-                        $transaction->dateTime,
+                        $transaction->transaction_type,
+                        $transaction->date_time,
                         $actions
                     ];
                 }
             @endphp
 
             {{-- Renderizar la tabla genérica --}}
-            <x-table-responsive :title=" 'Transactions of '.$account->accountType " :object="$transactionsData" />
+            <x-table-responsive :title=" 'Transactions of '.$account->account_type " :object="$transactionsData" />
         </div>
     @endforeach
 </x-layout>

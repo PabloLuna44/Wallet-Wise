@@ -9,6 +9,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\TransactionController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Laravel\Jetstream\Rules\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,14 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
+
+
 Route::middleware(['auth','verified'])->group(function(){
 
     Route::resource('investments',InvestmentController::class);
+    Route::get('transactions/recycle',[TransactionController::class,'recycle'])->name('transactions.recycle');
+    Route::post('transactions/restore/{id}',[TransactionController::class,'restore'])->name('transactions.restore');
+    Route::delete('transactions/force-delete/{id}',[TransactionController::class,'forceDelete'])->name('transactions.force-delete');    
     Route::resource('transactions', TransactionController::class);
     Route::resource('accounts', AccountController::class);
     Route::resource('earnings', EarningController::class);
@@ -59,7 +65,6 @@ Route::post('/email/verification-notification', function (Request $request) {
  
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
 
 Route::middleware([
     'auth:sanctum',
