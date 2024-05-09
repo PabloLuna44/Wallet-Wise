@@ -6,6 +6,7 @@ use App\Http\Controllers\EarningController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\TransactionController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -36,7 +37,7 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth','verified'])->group(function(){
-
+    Route::get('/pdf-accounts', [PDFController::class, 'accountsPDF'])->name('pdf.accounts');
     Route::resource('investments',InvestmentController::class);
     Route::get('transactions/recycle',[TransactionController::class,'recycle'])->name('transactions.recycle');
     Route::post('transactions/restore/{id}',[TransactionController::class,'restore'])->name('transactions.restore');
