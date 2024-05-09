@@ -11,13 +11,13 @@
 
           
             <label for="description">Description</label>
-            <input type="text" name="description" id="description" class="form-control mb-3" value="{{ old('description') }}">
+            <input type="text" name="description" id="description" class="form-control mb-3" value="{{ old('description') }}" required>
 
             <label for="spending">Gasto</label>
-            <input type="number" name="spending" id="spending" class="form-control mb-3" value="{{ old('spending') }}">
+            <input type="number" name="spending" id="spending" class="form-control mb-3" value="{{ old('spending') }}" min="1" step="0.01" required>
 
             <label for="expense_date">Fecha</label>
-            <input type="date" name="expense_date" id="expense_date" class="form-control mb-3" value="{{ old('expense_date') }}">
+            <input type="date" name="expense_date" id="expense_date" class="form-control mb-3" value="{{ old('expense_date') }}" required>
 
             <input type="submit" value="Enviar" class="btn btn-primary">
 

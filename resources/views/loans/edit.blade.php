@@ -6,24 +6,24 @@
             @method('PUT')
 
             <label for="amount">Amount:</label><br>
-            <input type="text" id="amount" name="amount" class="form-control mb-3" value="{{ old('amount',$loan->amount) }}">
+            <input type="number" id="amount" name="amount" class="form-control mb-3" value="{{ old('amount',$loan->amount) }}" min="1" step="0.01" required>
 
             <label for="interest_rate">Interest Rate:</label>
-            <input type="text" id="interest_rate" name="interest_rate" class="form-control mb-3" value="{{ old('interest_rate',$loan->interest_rate) }}">
+            <input type="number" id="interest_rate" name="interest_rate" class="form-control mb-3" value="{{ old('interest_rate',$loan->interest_rate) }}" min="1" step="0.01" required>
 
             <label for="status">Status:</label>
-            <select id="status" name="status" class="form-select mb-3">
+            <select id="status" name="status" class="form-select mb-3" required>
                 <option value="Pendiente" {{  old('status',$loan->status) == 'Pendiente' ? 'selected' : ''}}>Pendiente</option>
                 <option value="Pagada" {{  old('status',$loan->status) == 'Pagada' ? 'selected' : ''}}>Pagada</option>
                 <option value="Vencido" {{  old('status',$loan->status) == 'Vencido' ? 'selected' : ''}}>Vencido</option>
             </select><br>
 
             <label for="payment_date">Payment Date:</label>
-            <input type="date" id="payment_date" name="payment_date" class="form-control mb-3" value="{{ old('payment_date',$loan->payment_date) }}">
+            <input type="date" id="payment_date" name="payment_date" class="form-control mb-3" value="{{ old('payment_date',$loan->payment_date) }}" required>
 
             <!-- Agregar usuarios -->
             <label for="selectedUser">Add User:</label>
-            <select id="selectedUser" name="selectedUser" class="form-control mb-3">
+            <select id="selectedUser" name="selectedUser" class="form-control mb-3" required>
                 @foreach ($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                 @endforeach

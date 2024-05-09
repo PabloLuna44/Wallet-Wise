@@ -6,17 +6,17 @@
             @method('PUT')
 
             <label for="accounts_id">Account</label>
-            <select id="accounts_id" name="accounts_id" class="form-select mb-3">
+            <select id="accounts_id" name="accounts_id" class="form-select mb-3" required>
                 @foreach($accounts as $account)
                 <option value="{{$account->id}}">{{$account->account_type}}</option>
                 @endforeach
             </select>
 
             <label for="amount">Amount:</label>
-            <input type="text" id="amount" name="amount" class="form-control" value="{{ old('amount', $transaction->amount) }}"><br>
+            <input type="number" id="amount" name="amount" class="form-control" value="{{ old('amount', $transaction->amount) }}" step="0.01" min="1" required ><br>
 
             <label for="transaction_type">Transaction Type:</label>
-            <select id="transaction_type" name="transaction_type" class="form-select mb-3">
+            <select id="transaction_type" name="transaction_type" class="form-select mb-3" required>
                 <option value="Depósito" {{ old('transaction_type',$transaction->transaction_type) == 'Depósito' ? 'selected' : '' }} Depósito</option>
                 <option value="Retiro" {{ old('transaction_type',$transaction->transaction_type) == 'Retiro' ? 'selected' : '' }}>Retiro</option>
                 <option value="Transferencia" {{ old('transaction_type',$transaction->transaction_type) == 'Transferencia' ? 'selected' : '' }}>Transferencia</option>
@@ -25,7 +25,7 @@
 
 
             <label for="date_time">Date Time:</label>
-            <input type="datetime-local" id="date_time" name="date_time" class="form-control" value="{{ old('date_time', date('Y-m-d\TH:i', strtotime($transaction->date_time))) }}"><br>
+            <input type="datetime-local" id="date_time" name="date_time" class="form-control" value="{{ old('date_time', date('Y-m-d\TH:i', strtotime($transaction->date_time))) }}" required><br>
 
             <button type="submit" class="btn btn-primary">Update Transaction</button>
         </form>
