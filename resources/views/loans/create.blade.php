@@ -9,23 +9,23 @@
         @csrf
 
         <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="amount" class="form-control mb-3" value="{{ old('amount') }}">
+        <input type="number" id="amount" name="amount" class="form-control mb-3" value="{{ old('amount') }}" step="0.01" min="1" required>
 
         <label for="interest_rate">Interest Rate:</label>
-        <input type="text" id="interest_rate" name="interest_rate" class="form-control mb-3" value="{{ old('interest_rate') }}">
+        <input type="number" id="interest_rate" name="interest_rate" class="form-control mb-3" value="{{ old('interest_rate') }}" step="0.01" min="1" required>
 
         <label for="status">Status:</label><br>
-        <select id="status" name="status" class="form-select">
+        <select id="status" name="status" class="form-select" required>
             <option value="Pendiente" {{ old('status') == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
             <option value="Pagada" {{ old('status') == 'Pagada' ? 'selected' : '' }}>Pagada</option>
             <option value="Vencido" {{ old('status') == 'Vencido' ? 'selected' : '' }}>Vencido</option>
         </select><br>
 
         <label for="payment_date">Payment Date:</label><br>
-        <input type="date" id="paymentDate" name="payment_date" class="form-control mb-3" value="{{ old('payment_date') }}">
+        <input type="date" id="paymentDate" name="payment_date" class="form-control mb-3" value="{{ old('payment_date') }}" required>
 
         <label for="selectedUser">Select User:</label>
-        <select id="selectedUser" name="selectedUser" class="form-select mb-3">
+        <select id="selectedUser" name="selectedUser" class="form-select mb-3" required>
             @foreach($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach

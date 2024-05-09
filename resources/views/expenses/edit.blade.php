@@ -12,13 +12,13 @@
             @method('PUT')
 
             <label for="description">Description</label>
-            <input type="text" name="description" id="description" class="form-control mb-3" value="{{ old('description', $expense->description) }}">
+            <input type="text" name="description" id="description" class="form-control mb-3" value="{{ old('description', $expense->description) }}" required>
 
             <label for="spending">Gasto</label>
-            <input type="number" name="spending" id="spending" class="form-control mb-3" value="{{ old('spending', $expense->spending) }}">
+            <input type="number" name="spending" id="spending" class="form-control mb-3" value="{{ old('spending', $expense->spending) }}" min="1" step="0.01" required>
 
             <label for="expenseDate">Fecha</label>
-            <input type="date" name="expense_date" id="expense_date" class="form-control mb-3" value="{{ old('expense_date', $expense->expense_date) }}">
+            <input type="date" name="expense_date" id="expense_date" class="form-control mb-3" value="{{ old('expense_date', $expense->expense_date) }}" required>
 
             <input type="submit" value="Enviar" class="btn btn-primary">
 

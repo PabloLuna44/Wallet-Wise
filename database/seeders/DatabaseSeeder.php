@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Account;
 use App\Models\Loan;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,14 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)
         ->has(Loan::factory()->count(3))
+        ->has(
+            Account::factory()
+            ->count(3)
+            ->has(Transaction::factory()->count(3))
+            )
+        
         ->create();
+        
 
         User::factory()
             ->withPersonalTeam()

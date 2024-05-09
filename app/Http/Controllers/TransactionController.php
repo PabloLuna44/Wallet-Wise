@@ -45,12 +45,12 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
 
-        $userEmail = Auth::user()->email;
-        Mail::to($userEmail)->send(new TestMail());
         $account = Account::with('transactions')->find($request->account_id);
+
+        
         $request->validate(
             [
-                'amount' => 'max:' . $account->balance . '|numeric|required',
+                'amount' => 'max:' . $account->balance . '|numeric|required|min:1',
                 'transaction_type' => 'required|in:Depósito,Retiro,Transferencia,Pago',
                 'date_time' => 'required|date',
                 'account_id' => 'required|exists:accounts,id',
@@ -59,12 +59,9 @@ class TransactionController extends Controller
                 'amount.max' => 'The amount cannot be greater than the account balance..'
             ]
         );
-
-
-
-
         Transaction::create($request->all());
-
+        // $userEmail = Auth::user()->email;
+        // Mail::to($userEmail)->send(new TestMail());
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
 
