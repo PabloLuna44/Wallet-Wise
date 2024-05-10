@@ -60,8 +60,7 @@ class TransactionController extends Controller
             ]
         );
         Transaction::create($request->all());
-        // $userEmail = Auth::user()->email;
-        // Mail::to($userEmail)->send(new TestMail());
+   
         return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
 
