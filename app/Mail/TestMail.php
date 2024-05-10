@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class TestMail extends Mailable
 {
@@ -26,8 +27,14 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.welcome')
-                    ->subject('Test Mail') // Asunto del correo
-                    ->from('correo_de_origen@example.com'); // Dirección de correo electrónico del remitente
+        $user=Auth::user();
+        $title="Email Accounts";
+        $userName=$user->name;
+        $userEmail=$user->email;
+        
+        return $this->view('emails.accounts',compact('title','userName','userEmail'))
+                    ->subject('Accouns PDF Mail') 
+                    ->from('walletwise@contact.com'); 
     }
+
 }

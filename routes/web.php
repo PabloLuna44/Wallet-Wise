@@ -6,6 +6,7 @@ use App\Http\Controllers\EarningController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\TransactionController;
 use GuzzleHttp\Psr7\Request;
@@ -37,6 +38,8 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth','verified'])->group(function(){
+
+    Route::get('/email-acountsPDF',[MailController::class,'EmailAccountsPDF'])->name('email.accounts');
     Route::get('/pdf-accounts', [PDFController::class, 'accountsPDF'])->name('pdf.accounts');
     Route::resource('investments',InvestmentController::class);
     Route::get('transactions/recycle',[TransactionController::class,'recycle'])->name('transactions.recycle');
