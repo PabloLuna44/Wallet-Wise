@@ -10,9 +10,17 @@
     @foreach ($accounts as $account)
         <div>
             <h3>Account Type: {{ $account->account_type }}</h3>
-            <p>Balance: {{ $account->balance }}</p>
+            <p>Initial Balance: {{ $account->balance }}</p> <!-- Mostrar el monto inicial -->
             @php
-                // Organizar los datos de las transacciones de la cuenta en un array
+                $depositTypes = ['Depósito', 'Transferencia'];
+                $withdrawTypes = ['Retiro', 'Pago'];
+                $totalDeposits = $account->transactions->whereIn('transaction_type', $depositTypes)->sum('amount');
+                $totalWithdrawals = $account->transactions->whereIn('transaction_type', $withdrawTypes)->sum('amount');
+                $currentBalance = $account->balance + $totalDeposits - $totalWithdrawals;
+            @endphp
+            <p>Total Transactions: {{ $totalDeposits - $totalWithdrawals }}</p>
+            <p>Current Balance: {{ $currentBalance }}</p> <!-- Calcula el saldo -->
+            @php
                 $transactionsData = [
                     ['Amount', 'Type', 'Date', 'Actions']
                 ];
@@ -37,4 +45,5 @@
             <x-table-responsive :title=" 'Transactions of '.$account->account_type " :object="$transactionsData" />
         </div>
     @endforeach
+
 </x-layout>
