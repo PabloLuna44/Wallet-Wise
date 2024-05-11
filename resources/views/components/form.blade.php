@@ -11,6 +11,11 @@
             </ul>
         </div>
     @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
                     <h6 class="mb-4">{{$title}}</h6>
                     {{$slot}}
                     

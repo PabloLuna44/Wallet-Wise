@@ -6,6 +6,7 @@ use App\Http\Controllers\EarningController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\TransactionController;
@@ -41,6 +42,10 @@ Route::middleware(['auth','verified'])->group(function(){
 
     Route::get('/email-acountsPDF',[MailController::class,'EmailAccountsPDF'])->name('email.accounts');
     Route::get('/pdf-accounts', [PDFController::class, 'accountsPDF'])->name('pdf.accounts');
+    Route::post('/file-upload', [FileController::class, 'store'])->name('file.store');
+    Route::get('/files-history', [FileController::class, 'index'])->name('file.index');
+    Route::get('/files/{id}', [FileController::class, 'download'])->name('file.download');
+    Route::delete('/files/{id}', [FileController::class, 'destroy'])->name('file.destroy');
     Route::resource('investments',InvestmentController::class);
     Route::get('transactions/recycle',[TransactionController::class,'recycle'])->name('transactions.recycle');
     Route::post('transactions/restore/{id}',[TransactionController::class,'restore'])->name('transactions.restore');
