@@ -9,6 +9,10 @@
 
     <h1>{{$title}}</h1>
 
+    <div>
+        <a class="btn btn-primary m-2" href="{{ route('dashboard') }}">Back to Dashboard</a>
+    </div>
+
     @php
     $fileData = [
     ['Name','Actions']
