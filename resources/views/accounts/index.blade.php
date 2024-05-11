@@ -1,30 +1,27 @@
 <x-layout :title="$title">
+    <h2>Account Index</h2>
 
-    <h1>Accounts</h1>
     <div>
-        <a class="btn btn-primary m-2" href="{{ route('accounts.create') }}">Create New Account</a>
+        <a class="btn btn-primary m-2" href="{{ route('accounts.create') }}">Create A New Account</a>
     </div>
-    @php
+    <br>
 
-    $AccountData = [
-    ['Account Type', 'Balance']
-    ];
-    foreach ($accounts as $account) {
-    $actions = '<a class="btn btn-outline-primary m-2" href="'.route('accounts.show', $account->id).'">Ver</a> '.
-    '<a class="btn btn-outline-primary m-2" href="'.route('accounts.edit', $account->id).'">Editar</a> '.
-    '<form action="'.route('accounts.destroy', $account->id).'" method="POST">'.
-        '<input type="hidden" name="_token" value="'.csrf_token().'">'.
-        '<input type="hidden" name="_method" value="DELETE">'.
-        '<button type="submit" class="btn btn-outline-danger m-2">Eliminar</button>'.
-        '</form>';
-    $AccountData[] = [
-    $account->account_type,
-    $account->balance,
-    $actions
-    ];
-    }
-    @endphp
+    @foreach ($accounts as $account)
+        <div>
+            <h3>Account Type: {{ $account->account_type }}</h3>
+            <p>Initial Balance: {{ $account->balance }}</p> <!-- Mostrar el monto inicial -->
 
-    {{-- Renderizar la tabla genérica --}}
-    <x-table-responsive :title="$title" :object="$AccountData" />
+            @php
+                $depositTypes = ['Depósito', 'Transferencia'];
+                $withdrawTypes = ['Retiro', 'Pago'];
+                $totalDeposits = $account->transactions->whereIn('transaction_type', $depositTypes)->sum('amount');
+                $totalWithdrawals = $account->transactions->whereIn('transaction_type', $withdrawTypes)->sum('amount');
+                $currentBalance = $account->balance + $totalDeposits - $totalWithdrawals;
+            @endphp
+
+            <p>Current Balance: {{ $currentBalance }}</p> <!-- Mostrar el saldo actual -->
+            <a href="{{ route('transactions.index', ['account_id' => $account->id]) }}">View Transactions</a> <!-- Enlace para ver las transacciones de la cuenta -->
+        </div>
+    @endforeach
+
 </x-layout>
