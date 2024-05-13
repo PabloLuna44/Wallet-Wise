@@ -15,8 +15,6 @@ class ExpenseController extends Controller
         $expenses = Expense::where('user_id', auth()->id())->get();
         $title = 'Expenses Index';
 
-        
-
         return view('expenses.index', compact('expenses', 'title'));
     }
 
@@ -59,6 +57,7 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
+        $this->authorize('view', $expense);
         $title = 'Expenses Show';
         $expenseData = [
             'type' => 'expenses', 
@@ -75,6 +74,7 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
+        $this->authorize('update', $expense);
         $title = 'Expenses Edit';
         return view('expenses.edit', compact('expense', 'title'));
     }
@@ -84,7 +84,8 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-
+        
+        $this->authorize('update', $expense);
         $request->validate([
             'description' => ['required', 'string', 'max:255'],
             'spending' => ['required', 'numeric', 'min:0'],
@@ -106,6 +107,7 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
+        $this->authorize('delete', $expense);
         $expense->delete();
         return redirect()->route('expenses.index');
     }

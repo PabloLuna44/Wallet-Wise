@@ -48,6 +48,7 @@ class EarningController extends Controller
      */
     public function show(Earning $earning)
     {
+        $this->authorize('view', $earning);
         $title="Earnings Show";
 
         $earningData=[
@@ -66,6 +67,7 @@ class EarningController extends Controller
      */
     public function edit(Earning $earning)
     {
+        $this->authorize('update', $earning);
         $title="Earnings Edit";
         return view('earnings.edit', compact('earning','title'));
     }
@@ -75,6 +77,7 @@ class EarningController extends Controller
      */
     public function update(Request $request, Earning $earning)
     {
+        $this->authorize('update', $earning);
         $request->validate([
             'description' => 'required|max:50',
             'gain' => 'required|numeric',
@@ -93,6 +96,7 @@ class EarningController extends Controller
      */
     public function destroy(Earning $earning)
     {
+        $this->authorize('delete', $earning);
         $earning->delete();
 
         return redirect()->route('earnings.index')->with('success', 'Earning deleted successfully.');
