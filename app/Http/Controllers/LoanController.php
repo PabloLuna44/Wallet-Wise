@@ -49,6 +49,8 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Loan::class);
+
         $request->validate([
             'amount'=>'required|numeric',
             'interest_rate'=>'required|numeric',
@@ -79,6 +81,7 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
+        $this->authorize('view', $loan);
         $title = "Loans Show";
         
         return view('loans.show', compact('loan','title'));
@@ -89,6 +92,7 @@ class LoanController extends Controller
      */
     public function edit(Loan $loan)
     {
+        $this->authorize('update', $loan);
         $title = "Loans Edit";
         // Obtener todos los usuarios de la base de datos
         $users = User::all();
@@ -102,6 +106,7 @@ class LoanController extends Controller
      */
     public function update(Request $request, Loan $loan)
     {
+        $this->authorize('update', $loan);
         $request->validate([
             'amount'=>'required|numeric',
             'interest_rate'=>'required|numeric',
@@ -125,6 +130,7 @@ class LoanController extends Controller
      */
     public function destroy(Loan $loan)
     {
+        $this->authorize('delete', $loan);
         $loan->delete();
         
         return redirect()->route('loans.index')->with('success', 'Loan deleted successfully') ;

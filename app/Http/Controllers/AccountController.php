@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AccountController extends Controller
 {
@@ -13,11 +14,17 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $title="Accounts";
+        $title = "Accounts";
         $user = Auth::user();
-        $accounts = $user->accounts;
 
-        return view('accounts.index', compact('accounts','title'));
+        // Verificar si el usuario tiene permiso para ver cualquier cuenta
+        if (Gate::allows('viewAny', Account::class)) {
+            $accounts = $user->accounts;
+            return view('accounts.index', compact('accounts', 'title'));
+        } else {
+            // Si el usuario no tiene permiso, mostrar un error 403 (Acceso prohibido)
+            return abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -25,8 +32,8 @@ class AccountController extends Controller
      */
     public function create()
     {
-        $title="Accounts Create";
-        return view('accounts.create',compact('title'));
+        $title = "Accounts Create";
+        return view('accounts.create', compact('title'));
     }
 
     /**
@@ -34,6 +41,9 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
+        // Verificar si el usuario tiene permiso para crear una cuenta
+        $this->authorize('create', Account::class);
+
         $request->validate([
             'account_type' => 'required|max:50',
             'balance' => 'required|numeric',
@@ -50,16 +60,18 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        $title="Accounts Show";
+        // Verificar si el usuario tiene permiso para ver la cuenta específica
+        $this->authorize('view', $account);
+
+        $title = "Accounts Show";
         $accountData = [
             'type' => 'accounts',
-            'id'=>$account->id,
+            'id' => $account->id,
             'Account Type' => $account->account_type,
             'Balance' => $account->balance,
-           
         ];
-    
-        return view('accounts.show', compact('accountData','title'));
+
+        return view('accounts.show', compact('accountData', 'title'));
     }
 
     /**
@@ -67,8 +79,11 @@ class AccountController extends Controller
      */
     public function edit(Account $account)
     {
-        $title="Accounts Edit";
-        return view('accounts.edit', compact('account','title'));
+        // Verificar si el usuario tiene permiso para editar la cuenta específica
+        $this->authorize('update', $account);
+
+        $title = "Accounts Edit";
+        return view('accounts.edit', compact('account', 'title'));
     }
 
     /**
@@ -76,6 +91,9 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
+        // Verificar si el usuario tiene permiso para actualizar la cuenta específica
+        $this->authorize('update', $account);
+
         $request->validate([
             'account_type' => 'required|max:50',
             'balance' => 'required|numeric',
@@ -91,6 +109,9 @@ class AccountController extends Controller
      */
     public function destroy(Account $account)
     {
+        // Verificar si el usuario tiene permiso para eliminar la cuenta específica
+        $this->authorize('delete', $account);
+
         $account->delete();
 
         return redirect()->route('accounts.index')->with('success', 'Account deleted successfully.');

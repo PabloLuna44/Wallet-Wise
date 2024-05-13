@@ -41,6 +41,8 @@ class InvestmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Investment::class);
+
         $request->validate([
             'type' => 'required|max:50',
             'amount' => 'required|numeric',
@@ -60,6 +62,8 @@ class InvestmentController extends Controller
      */
     public function show(Investment $investment)
     {
+        $this->authorize('view', $investment);
+
         $title="Investment Show";
         $investmentData = [
             'type' => 'investments',
@@ -79,6 +83,8 @@ class InvestmentController extends Controller
      */
     public function edit(Investment $investment)
     {
+        $this->authorize('update', $investment);
+
         $title="Investment Edit";
         return view('investments.edit', compact('investment','title'));
     }
@@ -88,6 +94,8 @@ class InvestmentController extends Controller
      */
     public function update(Request $request, Investment $investment)
     {
+        $this->authorize('update', $investment);
+
         $request->validate([
             'type' => 'required|max:50',
             'amount' => 'required|numeric',
@@ -106,6 +114,8 @@ class InvestmentController extends Controller
      */
     public function destroy(Investment $investment)
     {
+        $this->authorize('delete', $investment);
+        
         $investment->delete();
         return redirect()->route('investments.index')->with('success', 'Investment deleted successfully.');
     }

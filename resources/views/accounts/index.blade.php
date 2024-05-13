@@ -20,7 +20,19 @@
             @endphp
 
             <p>Current Balance: {{ $currentBalance }}</p> <!-- Mostrar el saldo actual -->
-            <a href="{{ route('transactions.index', ['account_id' => $account->id]) }}">View Transactions</a> <!-- Enlace para ver las transacciones de la cuenta -->
+
+            <!-- Botón para editar la cuenta -->
+            <a class="btn btn-primary m-2" href="{{ route('accounts.edit', $account->id) }}">Editar</a>
+
+            <!-- Formulario para eliminar la cuenta -->
+            <form action="{{ route('accounts.destroy', $account->id) }}" method="POST" style="display: inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger m-2">Eliminar</button>
+            </form>
+
+            <!-- Enlace para ver las transacciones de la cuenta -->
+            <a href="{{ route('transactions.index', ['account_id' => $account->id]) }}">View Transactions</a>
         </div>
     @endforeach
 
