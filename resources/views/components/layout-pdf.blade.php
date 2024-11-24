@@ -7,29 +7,18 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
-    <!-- Favicon -->
-    <link href="{{asset('build/assets/img/favicon.ico')}}" rel="icon">
-
-    <!-- Libraries Stylesheet -->
-    <link href="{{asset('build/assets/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('build/assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('build/assets/css/bootstrap.css')}}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{asset('build/assets/css/style.css')}}" rel="stylesheet">
 </head>
-<body>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
 
+    <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h1 style="font-size: 24px; color: #333;">{{$namePage}}</h1>
+        <h2 style="font-size: 20px; color: #555;">{{$title}}</h2>
+        <h2 style="font-size: 20px; color: #555;">Date: {{$date}}</h2>
 
-<h1>{{$namePage}}</h1>
-<h2>{{$title}}</h2>
-<h2>Date:{{$date}}</h2>
-
-    
-{{$slot}}
+        <div style="margin-top: 20px;">
+            {{$slot}}
+        </div>
+    </div>
 
 </body>
 </html>
