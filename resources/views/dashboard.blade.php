@@ -1,41 +1,48 @@
 <x-layout title="Dashboard">
 
-    <h1>Welcome To Wallet Wise</h1>
-
-    <div>
-        <h2>Download accounts Information</h2>
-        <a class="btn btn-primary m-2" href="{{ route('email.accounts') }}">Click Here</a>
+<div class="container my-5">
+    <!-- Welcome Section -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary fw-bold">Welcome To Wallet Wise</h1>
+        <p class="lead text-muted">Manage your accounts effortlessly with our tools.</p>
     </div>
 
-    <br>
+    <!-- Download Accounts Information Section -->
+    <div class="card shadow mb-4 bg-secondary">
+        <div class="card-body">
+            <h2 class="card-title text-secondary">Download Accounts Information</h2>
+            <p class="card-text">Click below to download your account details.</p>
+            <a class="btn btn-primary" href="{{ route('email.accounts') }}">Accounts Details</a>
+        </div>
+    </div>
 
-    <div>
-        <h2>Upload Files</h2>
-        <h4>You can upload to have a history about yours accounts </h4>
-        <a href="">History of PDF</a>
+    <!-- Upload Files Section -->
+    <div class="card shadow mb-4 bg-secondary">
+        <div class="card-body">
+            <h2 class="card-title text-secondary">Upload Files</h2>
+            <p class="card-text">You can upload files to maintain a history of your accounts.</p>
+            <h4 class="text-muted">Upload PDFs for record-keeping:</h4>
+            <p class="card-text">View your previously uploaded files here.</p>
+            <a class="btn btn-primary" href="{{ route('file.index') }}">Click Here</a>
 
-        <x-form title="Upload Files">
-            <form action="{{route('file.store')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('POST')
+            <x-form title="Upload Files">
+                <form action="{{route('file.store')}}" method="POST" enctype="multipart/form-data" class="mt-3">
+                    @csrf
+                    @method('POST')
 
-                <label for="history">History of files PDF</label>
-                <input type="file" class="form-control mb-3" name="history[]" id="history" multiple>
-                <div id="pdf-preview"></div>
+                    <div class="mb-3">
+                        <label for="history" class="form-label">Upload History Files (PDF)</label>
+                        <input type="file" class="form-control" name="history[]" id="history" multiple>
+                        <div id="pdf-preview" class="mt-2"></div>
+                    </div>
 
-                <input type="submit" class="btn btn-primary">
-
-            </form>
-
-        </x-form>
-
+                    <button type="submit" class="btn btn-success">Upload</button>
+                </form>
+            </x-form>
+        </div>
     </div>
 
 
-    <br>
-    <div>
-        <h2>History Files</h2>
-        <a class="btn btn-primary m-2" href="{{ route('file.index') }}">Click Here</a>
-    </div>
-    
+</div>
+
 </x-layout>

@@ -12,7 +12,7 @@ class tableResponsive extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $title,public array $object)
+    public function __construct(public string $title,public array $object, public string $tableId="dataTable-1")
     {
         //
     }

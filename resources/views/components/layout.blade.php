@@ -19,6 +19,15 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+     <link href="{{asset('build/assets/css/bootstrap.css')}}" rel="stylesheet">
+      <!-- Font Awesome -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+      <!-- DataTables CSS -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+      <!-- Custom Stylesheet -->
+      <link href="{{asset('build/assets/css/style.css')}}" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="{{asset('build/assets/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
@@ -226,7 +235,11 @@
     <script src="{{asset('build/assets/lib/tempusdominus/js/moment.min.js')}}"></script>
     <script src="{{asset('build/assets/lib/tempusdominus/js/moment-timezone.min.js')}}"></script>
     <script src="{{asset('build/assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <!-- DataTables JS -->
+      <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <!-- Template Javascript -->
     <script src="{{asset('build/assets/js/main.js')}}"></script>
 </body>

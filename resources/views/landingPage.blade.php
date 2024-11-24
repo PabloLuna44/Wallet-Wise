@@ -27,29 +27,38 @@
 <body>
 
 
-      <nav class="navbar bg-secondary navbar-dark">
-            <a href="{{route('dashboard') }}" class="navbar-brand mx-4 mb-3">
-                  <h3 class="text-primary"><i class="fa  me-2"><img src="{{asset('build/assets/img/logo.webp')}}" style="max-width: 50px;" alt=""></i>Wallet Wise</h3>
-            </a>
-
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-secodary shadow ">
+            <div class="container">
+                  <!-- Brand Logo and Name -->
+                  <a href="{{ route('dashboard') }}" class="navbar-brand d-flex align-items-center">
+                        <img src="{{ asset('build/assets/img/logo.webp') }}" alt="Wallet Wise Logo" style="width: 40px; height: 40px;" class="me-2">
+                        <h4 class="mb-0 text-light">Wallet Wise</h4>
+                  </a>
+                  <!-- Toggler for Mobile View -->
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                   </button>
-                  <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ml-auto">
+                  <!-- Navigation Links -->
+                  <div class="collapse navbar-collapse" id="navbarContent">
+                        <ul class="navbar-nav ms-auto">
                               <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                                    <a class="nav-link text-light" href="#"><i class="fas fa-info-circle me-2"></i>About Us</a>
                               </li>
-                              <li class="nav-item ml-4">
-                                    <a class="nav-link" href="{{ route('register') }}">Sign Up</a>
+                              <li class="nav-item">
+                                    <a class="nav-link text-light" href="#"><i class="fas fa-concierge-bell me-2"></i>Services</a>
+                              </li>
+                              <li class="nav-item">
+                                    <a class="nav-link text-light" href="#"><i class="fas fa-envelope me-2"></i>Contact</a>
+                              </li>
+                              <li class="nav-item">
+                                    <a class="btn btn-primary px-4 py-2 me-2" href="{{ route('login') }}"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
+                              </li>
+                              <li class="nav-item">
+                                    <a class="btn btn-outline-light px-4 py-2" href="{{ route('register') }}"><i class="fas fa-user-plus me-2"></i>Sign Up</a>
                               </li>
                         </ul>
                   </div>
-            </nav>
-
-
+            </div>
       </nav>
 
 
@@ -62,28 +71,26 @@
             </ol>
             <div class="carousel-inner">
                   <div class="carousel-item active">
-                        <img class="d-block w-100 bg-dark" src="{{asset('build/assets/img/Trading.webp')}}" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
+                        <img class="d-block w-100 fixed-size" src="{{asset('build/assets/img/Trading.webp')}}" alt="Trading">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                               <h5>Trading</h5>
-                              <p>Aprende como comprar acciones y venderlas inteligentemente</p>
+                              <p>Learn how to buy and sell stocks intelligently</p>
                         </div>
                   </div>
                   <div class="carousel-item">
-                        <img class="d-block w-100 " src="{{asset('build/assets/img/Criptos.webp')}}" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                              <h5>Criptomonedas</h5>
-                              <p>Aprende como funciona el mundo de las Criptomonedas</p>
+                        <img class="d-block w-100 fixed-size" src="{{asset('build/assets/img/Criptos.webp')}}" alt="Cryptocurrencies">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                              <h5>Cryptocurrencies</h5>
+                              <p>Learn how the world of cryptocurrencies works</p>
                         </div>
                   </div>
                   <div class="carousel-item">
-                        <img class="d-block w-100 " src="{{asset('build/assets/img/Invertions.webp')}}" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-
-                              <h5>Inversiones Inteligentes</h5>
-                              <p>Con wallet wise prodras administrar tus invresiones</p>
+                        <img class="d-block w-100 fixed-size" src="{{asset('build/assets/img/Invertions.webp')}}" alt="Smart Investments">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                              <h5>Smart Investments</h5>
+                              <p>Manage your investments with Wallet Wise</p>
                         </div>
                   </div>
-
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -141,67 +148,74 @@
 
       <hr>
 
-      <section>
-            <div class="d-flex justify-content-center">
-                  <h2>Why Choose Wallet Wise</h2>
-            </div>
-
-            <div class="d-flex align-items-center justify-content-center">
-                  <div class="p-2 m-5">
-                        <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center" style="width: 150px; height: 150px;">
-                              <i class="fas fa-user fa-6x"></i>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                              <p>Confiabilidad</p>
-                        </div>
+      <section class="py-5">
+            <div class="container">
+                  <div class="text-center mb-5">
+                        <h2>Why Choose Wallet Wise</h2>
                   </div>
-                  <div class="p-2 m-5">
-                        <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center" style="width: 150px; height: 150px;">
-                              <i class="fas fa-lock fa-6x"></i>
+                  <div class="row text-center">
+                        <div class="col-md-4 mb-4">
+                              <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center mx-auto" style="width: 150px; height: 150px;">
+                                    <i class="fas fa-user fa-6x text-white"></i>
+                              </div>
+                              <h5 class="mt-3">Reliability</h5>
+                              <p>Trustworthy and dependable services for all your financial needs.</p>
                         </div>
-                        <div class="d-flex justify-content-center">
-                              <p>Transaciones seguras</p>
+                        <div class="col-md-4 mb-4">
+                              <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center mx-auto" style="width: 150px; height: 150px;">
+                                    <i class="fas fa-lock fa-6x text-white"></i>
+                              </div>
+                              <h5 class="mt-3">Secure Transactions</h5>
+                              <p>Ensuring your transactions are safe and secure at all times.</p>
                         </div>
-                  </div>
-                  <div class="p-2 m-5">
-                        <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center" style="width: 150px; height: 150px;">
-                              <i class="fas fa-wallet fa-6x"></i>
+                        <div class="col-md-4 mb-4">
+                              <div class="bg-secondary rounded-circle d-flex justify-content-center align-items-center mx-auto" style="width: 150px; height: 150px;">
+                                    <i class="fas fa-wallet fa-6x text-white"></i>
+                              </div>
+                              <h5 class="mt-3">Manage Your Income</h5>
+                              <p>Efficient tools to help you manage and grow your income.</p>
                         </div>
-
-                        <div class="d-flex justify-content-center">
-                              <p>Administra tus Ingresos</p>
-
-                        </div>
-
                   </div>
             </div>
-
-
       </section>
 
-      <footer>
-            <div class="bg-secondary">
-                  <div class="container">
-                        <div class="row ">
-                              <div class="col-md-4  mt-5">
-                                    <h5>Wallet Wise</h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo impedit, esse, veritatis ipsum fugit commodi delectus in expedita iste non incidunt voluptate ipsam sed? Excepturi itaque dolores eos voluptas. Accusamus.</p>
-                              </div>
-                              <div class="col-md-4  mt-5">
-                                    <h5>Links</h5>
-                                    <ul>
-                                          <li>Home</li>
-                                          <li>About us</li>
-                                          <li>Services</li>
-                                          <li>Contact</li>
-                                    </ul>
-                              </div>
-                              <div class="col-md-4  mt-5">
-                                    <h5>Contact</h5>
-                                    <ul>
-                                          <li>Phone: 123456789</li>
-                                          <li>Email:
-
+      <footer class="bg-secondary text-white py-5">
+            <div class="container">
+                  <div class="row">
+                        <div class="col-md-4 mt-3">
+                              <h5>Wallet Wise</h5>
+                              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo impedit, esse, veritatis ipsum fugit commodi delectus in expedita iste non incidunt voluptate ipsam sed? Excepturi itaque dolores eos voluptas. Accusamus.</p>
+                        </div>
+                        <div class="col-md-4 mt-3">
+                              <h5>Links</h5>
+                              <ul class="list-unstyled">
+                                    <li><a href="#" class="text-white">Home</a></li>
+                                    <li><a href="#" class="text-white">About Us</a></li>
+                                    <li><a href="#" class="text-white">Services</a></li>
+                                    <li><a href="#" class="text-white">Contact</a></li>
+                              </ul>
+                        </div>
+                        <div class="col-md-4 mt-3">
+                              <h5>Contact</h5>
+                              <ul class="list-unstyled">
+                                    <li>Phone: 123456789</li>
+                                    <li>Email: info@walletwise.com</li>
+                              </ul>
+                              <h5>Follow Us</h5>
+                              <ul class="list-inline">
+                                    <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a></li>
+                              </ul>
+                        </div>
+                  </div>
+                  <div class="row mt-4">
+                        <div class="col text-center">
+                              <p>&copy; {{date('Y')}} Wallet Wise. All Rights Reserved.</p>
+                        </div>
+                  </div>
+            </div>
       </footer>
 
 </body>
